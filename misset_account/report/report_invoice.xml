@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+
+
+<template id="report_invoice_document_nsm_account_inherit_misset" inherit_id="nsm_account.report_invoice_document_nsm_account">
+        <xpath expr="//div/strong/t[@t-if='o.partner_id.is_company']" position="replace">
+            <t t-if="o.partner_id.is_company">
+                <div t-field="o.partner_id.name"/>
+                <div>T.a.v.: Crediteurenadministratie</div>
+            </t>
+        </xpath>
+</template>
+
+
+</data>
+</odoo>
