@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <report
+            id="nsm_sale_advertising_order.report_nsm_indeellijst_report_xlsx"
+            model="sale.order.line"
+            string="Indeellijst XLSX"
+            report_type="xlsx"
+            name="report_indeellijst_list1.xlsx"
+            file="report_indeellijst_list1.xlsx"
+            attachment_use="False"
+        />
+    </data>
+</odoo>
