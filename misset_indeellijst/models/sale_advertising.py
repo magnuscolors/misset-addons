@@ -27,16 +27,21 @@ from datetime import datetime
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
-    material_status = fields.Selection([('pending','Pending'),('received','Received')],"Material status",default='pending')
+    material_status = fields.Selection([('Pending','Pending'),('Received','Received'),('Recurring','Recurring')],"Material status",default='pending')
     date_material_received = fields.Datetime("Date material received")
 
     @api.multi
     def material_received(self):
         for rec in self:
-            rec.write({'material_status':"received",'date_material_received':datetime.now()})
+            rec.write({'material_status':"Received",'date_material_received':datetime.now()})
     
     @api.multi
     def material_pending(self):
         for rec in self:
-            rec.write({'material_status':"pending",'date_material_received':datetime.now()})
+            rec.write({'material_status':"Pending",'date_material_received':datetime.now()})
+            
+    @api.multi
+    def material_recurring(self):
+        for rec in self:
+            rec.write({'material_status':"Recurring",'date_material_received':datetime.now()})
         
