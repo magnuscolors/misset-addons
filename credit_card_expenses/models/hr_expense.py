@@ -160,4 +160,13 @@ class HrExpenseSheet(models.Model):
             self.write({'state': 'done'})
         return res
     
+    @api.one
+    @api.constrains('expense_line_ids')
+    def _check_amounts(self):
+        # DO NOT FORWARD-PORT! ONLY FOR v10
+        positive_lines = any([l.total_amount > 0 for l in self.expense_line_ids])
+        negative_lines = any([l.total_amount < 0 for l in self.expense_line_ids])
+#         if positive_lines and negative_lines:
+#             raise ValidationError(_('You cannot have a positive and negative amounts on the same expense report.'))
+
     
