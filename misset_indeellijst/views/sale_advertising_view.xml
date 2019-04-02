@@ -14,6 +14,20 @@
             </field>
         </record>
         
+        <record id="view_indeellijst_form_inherit" model="ir.ui.view">
+            <field name="name">sale.order.line.indeellijst.tree.inherit</field>
+            <field name="model">sale.order.line</field>
+            <field name="inherit_id" ref="sale_advertising_order.view_adv_order_line_form"></field>
+            <field name="arch" type="xml">
+            <field name="proof_number_amt_payer" position="after">
+            	<field name="material_status"/>
+                <field name="date_material_received"/>
+            </field>
+            </field>
+        </record>
+        
+        
+        
 		<record model="ir.actions.server" id="action_material_received">
             <field name="name">Mark Material Received</field>
             <field name="model_id" ref="model_sale_order_line"/>
@@ -50,6 +64,26 @@
             <field name="name">Mark Material Pending</field>
             <field name="key2">client_action_multi</field>
             <field name="value" eval="'ir.actions.server,' +str(ref('action_material_pending'))" />
+            <field name="key">action</field>
+            <field name="model">sale.order.line</field>
+        </record>
+        
+        <record model="ir.actions.server" id="action_material_recurring">
+            <field name="name">Mark Material Recurring</field>
+            <field name="model_id" ref="model_sale_order_line"/>
+             <field name="binding_model_id" ref="model_sale_order_line" />
+             <field name="state">code</field>
+            <field name="code">
+                if records:
+			    action = records.material_recurring()
+            </field>
+        </record>
+         
+        <record model="ir.values" id="material_recurring_value">
+            <field name="model_id" ref="model_sale_order_line" />
+            <field name="name">Mark Material Recurring</field>
+            <field name="key2">client_action_multi</field>
+            <field name="value" eval="'ir.actions.server,' +str(ref('action_material_recurring'))" />
             <field name="key">action</field>
             <field name="model">sale.order.line</field>
         </record>
