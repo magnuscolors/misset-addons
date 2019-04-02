@@ -6,15 +6,16 @@
             <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_form"></field>
             <field eval="25" name="priority"/>
             <field name="arch" type="xml">
-            	<field name="journal_id" position="attributes">
-            		<attribute name="invisible">True</attribute>
+            	<field name="currency_id" position="after">
+            		<field name="is_from_crdit_card"/>
             	</field>
-            	<field name="payment_mode" position="attributes">
+            	<field name="journal_id" position="attributes">
             		<attribute name="invisible">True</attribute>
             	</field>
             	<field name="currency_id" position="attributes">
             		<attribute name="invisible">True</attribute>
             	</field> 
+            	
             </field>
         </record>
         
@@ -24,6 +25,9 @@
             <field name="inherit_id" ref="hr_expense.hr_expense_form_view"></field>
             <field eval="25" name="priority"/>
             <field name="arch" type="xml">
+            	<field name="currency_id" position="after">
+            		<field name="is_from_crdit_card"/>
+            	</field>
             	<field name="payment_mode" position="attributes">
             		<attribute name="invisible">True</attribute>
             	</field>
@@ -72,7 +76,21 @@
             </field>
 		</record>
 		
-        
-         <menuitem id="menu_hr_expense_my_expenses_to_submit_credit_card" name="Expenses to Submit" sequence="1" parent="menu_hr_expense_my_expenses_credit_card" action="hr_expense_actions_my_unsubmitted_credit_card"/>
+		<record id="action_hr_expense_sheet_my_all_crdit_card" model="ir.actions.act_window">
+            <field name="name">My Reports</field>
+            <field name="res_model">hr.expense.sheet</field>
+            <field name="view_mode">tree,kanban,form,pivot,graph</field>
+            <field name="search_view_id" ref="hr_expense.view_hr_expense_sheet_filter"/>
+            <field name="domain">[('employee_id.user_id', '=', uid)]</field>
+             <field name="context" eval="{'from_credi_card_expense':True}" />
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click here to create a new expense report.
+              </p><p>
+                Once you have created your expense, submit it to your manager who will validate it.
+              </p>
+            </field>
+        </record>
+        <menuitem id="menu_hr_expense_sheet_my_reports_credit_card" name="Expense Reports" sequence="3" parent="menu_hr_expense_my_expenses_credit_card" action="action_hr_expense_sheet_my_all_crdit_card" load_xmlid="True"/>
         
 </odoo>

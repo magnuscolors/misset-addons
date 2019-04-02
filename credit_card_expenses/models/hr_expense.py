@@ -16,8 +16,6 @@ class HrExpense(models.Model):
     
     @api.model
     def create(self,vals):
-        print ("self._context",self._context)
-        print ("checking...",self._context.get("from_credi_card_expense"))
         if self._context.get("from_credi_card_expense"):
             vals.update({'is_from_crdit_card':True,'payment_mode':'company_account'})
         else:
@@ -129,11 +127,34 @@ class HrExpenseSheet(models.Model):
     is_from_crdit_card = fields.Boolean("is From Credit Card")
     
     @api.model
+    def default_get(self, fields):
+        context = dict(self._context or {})
+        rec = super(HrExpenseSheet, self).default_get(fields)
+        if self._context.get("from_credi_card_expense"):
+            rec.update({'is_from_crdit_card':True})
+        return rec
+
+
+    @api.model
     def create(self,vals):
         if self._context.get("from_credi_card_expense"):
             vals.update({'is_from_crdit_card':True})
-        return super(HrExpenseSheet,self).create(vals)
-
+        res = super(HrExpenseSheet,self).create(vals)
+        if res.is_from_crdit_card:
+            for line in res.expense_line_ids:
+                line.write({'is_from_crdit_card':True,'payment_mode':'company_account'})
+        return res
+    @api.multi
+    def write(self,vals):
+        if vals.get('expense_line_ids'):
+            line_list = vals.get('expense_line_ids')[0][2]
+            for expense in self.env['hr.expense'].browse(line_list):
+                expense.write({'is_from_crdit_card':True,'payment_mode':'company_account'})
+        if self.is_from_crdit_card:
+            for line in self.expense_line_ids:
+                line.write({'is_from_crdit_card':True,'payment_mode':'company_account'})
+        return super(HrExpenseSheet,self).write(vals)
+    
     @api.multi
     def action_sheet_move_create(self):
         if any(sheet.state != 'approve' for sheet in self):
