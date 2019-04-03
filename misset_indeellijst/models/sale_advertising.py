@@ -27,7 +27,7 @@ from datetime import datetime
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
-    material_status = fields.Selection([('Pending','Pending'),('Received','Received'),('Recurring','Recurring')],"Material status",default='pending')
+    material_status = fields.Selection([('Pending','Pending'),('Received','Received'),('Recurring','Recurring')],"Material status",default='Pending')
     date_material_received = fields.Datetime("Date material received")
 
     @api.multi
