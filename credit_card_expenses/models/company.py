@@ -24,6 +24,6 @@ from odoo import api, fields, models, _
 class Company(models.Model):
     _inherit = 'res.company'
 
-    creditcard_decl_journal_id = fields.Many2one('account.journal', 'Credit Card Expenses Journal',domain=[('type','=','purchase')])
+    creditcard_decl_journal_id = fields.Many2one('account.journal', 'Credit Card Expenses Journal',domain=['|',('type','=','bank'),('type','=','cash')])
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
