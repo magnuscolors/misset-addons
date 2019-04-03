@@ -27,19 +27,18 @@
 ##############################################################################
 
 {
-    'name' : 'misset_crm',
+    'name' : 'misset_sale_advertising_order',
     'version' : '1.0',
     'category': 'other',
-    'description': "This module adds customised functioality to the CRM module for Misset Uitgeverij B.V.",
+    'description': "This module adds customised functioality to the Sale Advertising Order module for Misset Uitgeverij B.V.",
     'author'  : 'Magnus - DK',
     'website' : 'http://www.magnus.nl',
-    'depends' : ['sale_advertising_order','crm'],
+    'depends' : ['nsm_sale_advertising_order'],
     'data'    : [
-       'views/res_partner_view.xml',
+        'views/sale_advertising_order_view.xml',
         ],
     'demo' : [],
     'installable': True
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-
 
