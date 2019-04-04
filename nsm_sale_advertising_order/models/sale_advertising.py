@@ -62,18 +62,6 @@ class SaleOrder(models.Model):
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
-
-    @api.multi
-    def material_received(self):
-        for rec in self:
-            rec.write({'material_status':"received",'date_material_received':datetime.now()})
-    
-    @api.multi
-    def material_pending(self):
-        for rec in self:
-            rec.write({'material_status':"pending",'date_material_received':datetime.now()})
-        
-        
     @api.multi
     @api.depends('adv_issue', 'product_template_id')
     def name_get(self):
