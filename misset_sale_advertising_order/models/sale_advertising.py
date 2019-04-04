@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2016 Magnus (<http://www.magnus.nl>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -20,6 +20,12 @@
 #
 ##############################################################################
 
-import models
-import report
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+from odoo import api, fields, models, _
+from datetime import datetime
+
+class sale_advertising_issue(models.Model):
+    _inherit = "sale.advertising.issue"
+    _description="Sale Advertising Issue"
+
+
+    dtp_deadline = fields.Datetime("Closing time for DTP")
