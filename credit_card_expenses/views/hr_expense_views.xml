@@ -6,13 +6,13 @@
             <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_form"></field>
             <field eval="25" name="priority"/>
             <field name="arch" type="xml">
-            	<field name="currency_id" position="after">
-            		<field name="is_from_crdit_card"/>
-            	</field>
             	<field name="journal_id" position="attributes">
             		<attribute name="invisible">True</attribute>
             	</field>
             	<field name="currency_id" position="attributes">
+            		<attribute name="invisible">True</attribute>
+            	</field> 
+            	<field name="bank_journal_id" position="attributes">
             		<attribute name="invisible">True</attribute>
             	</field> 
             	
@@ -25,9 +25,6 @@
             <field name="inherit_id" ref="hr_expense.hr_expense_form_view"></field>
             <field eval="25" name="priority"/>
             <field name="arch" type="xml">
-            	<field name="currency_id" position="after">
-            		<field name="is_from_crdit_card"/>
-            	</field>
             	<field name="payment_mode" position="attributes">
             		<attribute name="invisible">True</attribute>
             	</field>
