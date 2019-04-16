@@ -22,11 +22,20 @@ class NSMDeliveryListReport(ReportXlsx):
             title = ",".join(list(set(title))) if title else ' '
             return title
 
+        def _kix_code(customer):
+            nonkix = customer.zip or customer.parent.zip or ''
+            kix = nonkix.replace(" ", "")
+            return kix
+
         def _prepare_data(customer, orderLine):
             records = []
             parent = customer.parent_id
-            records.append(_get_title(orderLine))
+            records.append(_kix_code(customer))
+
+            records.append(customer.country_id.code or parent.country_id.code or '')
+            records.append(customer.zip or parent.zip or '')
             records.append(parent.name if parent else customer.name)
+
             if parent and not parent.is_company:
                 records.append(parent.initials or '')
                 records.append(parent.infix or '')
@@ -39,8 +48,8 @@ class NSMDeliveryListReport(ReportXlsx):
                 records.append('')
                 records.append('')
                 records.append('')
-            records.append(customer.country_id.code or parent.country_id.code or '')
-            records.append(customer.zip or parent.zip or '')
+            records.append(_get_title(orderLine))
+
             records.append(customer.street_number or parent.street_number or '')
             records.append('')
             records.append(customer.street_name or parent.street_name or '')
@@ -66,8 +75,8 @@ class NSMDeliveryListReport(ReportXlsx):
 
             return row_datas
 
-        header = ['PAPERCODE', 'CUSTOMER NAME', 'VOORLETTERS', 'TUSSENVOEGSEL', 'ACHTERNAAM', 'COUNTRY CODE', 'ADDRESS ZIP',
-                  'HUISNUMMER', 'AANVULLING', 'ADDRESS STREET', 'ADDRESS CITY', 'AANTAL', 'CONTACT PERSOON']
+        header = ['Country Code', 'KIX Postal Code', 'Account', '', 'Street', 'Postal Code', 'City',
+                  'Country', 'Voucher Copy', 'Product Name', 'Issue Date']
 
         row_datas = _form_data(proofLines)
 
