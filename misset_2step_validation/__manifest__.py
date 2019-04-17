@@ -33,7 +33,7 @@
     'description': "This module validation on team",
     'author'  : 'Magnus - DK',
     'website' : 'http://www.magnus.nl',
-    'depends' : ['nsm_account'],
+    'depends' : ['nsm_custom_view_accounting'],
     'data'    : [
        'views/account_invoice_view.xml',
         ],
