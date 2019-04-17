@@ -14,3 +14,9 @@ class Partner(models.Model):
         rec.update({'is_company':True,'company_type':'company'})
         return rec
         
+    @api.model
+    def create(self,vals):
+        if vals.get('parent_id'):
+            vals.update({'is_company':False,'company_type':'person'})
+        res = super(Partner,self).create(vals)
+        return res
