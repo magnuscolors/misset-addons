@@ -8,7 +8,7 @@
             <field name="arch" type="xml">
             <xpath expr="//search" postion='inside'>
             <filter string="Analytic account" name="analytic_account_id"
-                            domain="[('department_id','=','user_id.department_id')]"/>
+                            domain="[('department_id','=','user_id.employee_id.department_id')]"/>
             </xpath>
              </field>
         </record>
