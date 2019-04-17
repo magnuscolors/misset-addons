@@ -6,9 +6,8 @@
             <field name="inherit_id" ref="hr_expense.hr_expense_form_view"></field>
             <field eval="25" name="priority"/>
             <field name="arch" type="xml">
-            <xpath expr="//search" postion='inside'>
-            <filter string="Analytic account" name="analytic_account_id"
-                            domain="[('department_id','=','user_id.employee_id.department_id')]"/>
+            <xpath expr="//field[@name='analytic_account_id']" position="attributes">
+                <attribute name="domain">[('department_id','in',user_id.employee_ids.department_id)]</attribute>
             </xpath>
              </field>
         </record>
