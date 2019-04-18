@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 from odoo import api, fields, models, _
-from __builtin__ import False
-from numpy.core.info import depends
 
 class Partner(models.Model):
     _description = 'Partner'
