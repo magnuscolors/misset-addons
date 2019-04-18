@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="supplier_full_access" model="res.groups">
+	    <field name="name">Extra rights/Supplier full access</field>
+	    <field name="category_id" ref="base.module_category_extra"/>
+	</record>
+</odoo>
