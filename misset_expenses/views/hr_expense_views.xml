@@ -7,7 +7,7 @@
             <field eval="25" name="priority"/>
             <field name="arch" type="xml">
             <xpath expr="//field[@name='analytic_account_id']" position="attributes">
-                <attribute name="domain">[('uid.employee_id.department_id.id','=',department_id)]</attribute>
+                <attribute name="domain">[('department_id.employee_id.user_id.id','=','uid')]</attribute>
             </xpath>
              </field>
         </record>
