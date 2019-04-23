@@ -6,8 +6,8 @@
             model="proof.number.delivery.list"
             string="Bewijsnummerlijst xlsx"
             report_type="xlsx"
-            name="report_pndl_delivery_list.xlsx"
-            file="report_pndl_delivery_list.xlsx"
+            name="report_pndl_delivery_list1.xlsx"
+            file="report_pndl_delivery_list1.xlsx"
             attachment_use="False"
         />
     </data>

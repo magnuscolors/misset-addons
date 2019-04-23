@@ -38,5 +38,17 @@
 			</field>
 			</field>
 		</record>
+		
+		<record id="view_order_form_advertising" model="ir.ui.view">
+            <field name="name">sale.order.form.advertising</field>
+            <field name="model">sale.order</field>
+			<field name="priority">20</field>
+			<field name="inherit_id" ref="sale_advertising_order.view_order_form_advertising"></field>
+            <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_submit']" position="attributes">
+            	<attribute name="groups">sale_advertising_order.group_traffic_user</attribute>
+            </xpath>
+            </field>
+       </record>
 	</data>
 </odoo>
