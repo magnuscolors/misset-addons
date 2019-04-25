@@ -32,8 +32,31 @@ class NSMDeliveryListReport(ReportXlsx):
             parent = customer.parent_id
             records.append(pLine.proof_country_code or '')
             records.append(_kix_code(customer))
-            records.append(pLine.proof_parent_name or '')
+            account_name = ''
+            
+            if parent:
+                account_name = parent.name
+            else:
+                account_name = customer.name or ''
+                
+            records.append(account_name or '')
+            
             initial = ''
+            firstname = ''
+            infix = ''
+            blank_details = ''
+            tital = ''
+            if parent:
+                if customer.title:
+                    tital = customer.title.name + " "
+                if customer.initials:
+                    initial= customer.initials + " "
+                if customer.firstname:
+                    firstname = customer.firstname + " "
+                if customer.infix:
+                    infix = customer.infix
+                blank_details = str(tital) + str(initial) + str(firstname) + str(infix)
+                
             if pLine.proof_number_payer.initials:
                 initial= pLine.proof_number_payer.initials + ' '
             elif pLine.proof_number_payer.firstname:
@@ -42,8 +65,8 @@ class NSMDeliveryListReport(ReportXlsx):
             if pLine.proof_number_payer.infix:
                 infix = pLine.proof_number_payer.infix + ' '
                 
-            blank_details =  str(pLine.proof_number_payer.title.name or '') + str(initial) + infix + pLine.proof_number_payer.lastname
             records.append(u''+ str(blank_details))
+            
             street_name_space = ''
             if customer.street_name or parent.street_name:
                 street_name_space = ' '
@@ -59,7 +82,9 @@ class NSMDeliveryListReport(ReportXlsx):
                 amount += pLine.line_id.proof_number_amt_payer
             records.append(amount)
             records.append(pLine.line_id.product_template_id.name or '')
-            records.append(pLine.issue_date)
+            issue_date_cov = datetime.datetime.strptime(pLine.issue_date, '%Y-%m-%d')
+            issue_date_c = datetime.datetime.strftime(issue_date_cov , '%d/%m/%Y')
+            records.append(issue_date_c)
             
             return records
 
@@ -80,7 +105,6 @@ class NSMDeliveryListReport(ReportXlsx):
         row_datas = _form_data(proofLines)
 
         if row_datas:
-            print ("row_datasrow_datas",row_datas)
             bold_format = workbook.add_format({'bold': True})
             report_name = 'PNDL_{date:%Y-%m-%d %H:%M:%S}'.format(date=datetime.datetime.now())
             sheet = workbook.add_worksheet(report_name[:31])
