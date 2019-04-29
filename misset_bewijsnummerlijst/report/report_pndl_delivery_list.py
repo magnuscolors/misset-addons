@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
+# Your code goes below this line
+
 from odoo.addons.report_xlsx.report.report_xlsx import ReportXlsx
 from odoo import api, fields, models, _
 import datetime
 from odoo.exceptions import UserError
-
-# -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 
 class NSMDeliveryListReport(ReportXlsx):
@@ -40,16 +39,20 @@ class NSMDeliveryListReport(ReportXlsx):
             tital = ''
             if parent:
                 account_name = parent.name
+                account_details = account_name
             else:
                 if customer.title:
                     tital = customer.title.name + " "
                 if customer.initials:
                     initial= customer.initials + " "
-                if customer.firstname:
-                    firstname = customer.firstname + " "
+                else:
+                    if customer.firstname:
+                        firstname = customer.firstname + " "
                 if customer.infix:
-                    infix = customer.infix
-                account_details = str(tital) + str(initial) + str(firstname) + str(infix)
+                    infix = customer.infix + " "
+                if customer.lastname:
+                    last_name = customer.lastname
+                account_details = str(tital) + str(initial) + str(firstname) + str(infix) + str(last_name)
 #                 account_name = customer.name or ''
                 
             records.append(account_details or '')
@@ -59,31 +62,42 @@ class NSMDeliveryListReport(ReportXlsx):
             infix = ''
             blank_details = ''
             tital = ''
+            last_name = ''
             if parent:
                 if customer.title:
                     tital = customer.title.name + " "
                 if customer.initials:
                     initial= customer.initials + " "
-                if customer.firstname:
-                    firstname = customer.firstname + " "
+                else:
+                    if customer.firstname:
+                        firstname = customer.firstname + " "
                 if customer.infix:
-                    infix = customer.infix
-                blank_details = str(tital) + str(initial) + str(firstname) + str(infix)
+                    infix = customer.infix + " "
+                if customer.lastname:
+                    last_name = customer.lastname 
+                blank_details = str(tital) + str(initial) + str(firstname) + str(infix) + str(last_name)
                 
-            if pLine.proof_number_payer.initials:
-                initial= pLine.proof_number_payer.initials + ' '
-            elif pLine.proof_number_payer.firstname:
-                initial = pLine.proof_number_payer.firstname + ' '
-            infix = ''
-            if pLine.proof_number_payer.infix:
-                infix = pLine.proof_number_payer.infix + ' '
+#             if pLine.proof_number_payer.initials:
+#                 initial= pLine.proof_number_payer.initials + ' '
+#             elif pLine.proof_number_payer.firstname:
+#                 initial = pLine.proof_number_payer.firstname + ' '
+#             infix = ''
+#             if pLine.proof_number_payer.infix:
+#                 infix = pLine.proof_number_payer.infix + ' '
                 
             records.append(u''+ str(blank_details))
             
-            street_name_space = ''
+            street_name_space = ' '
+            stret_name = ''
+            stret_number = ''
             if customer.street_name or parent.street_name:
                 street_name_space = ' '
-            street = str(customer.street_name or parent.street_name or '') + street_name_space +str(customer.street_number or parent.street_number or '')
+            stret_name = customer.street_name or parent.street_name
+            
+            stret_number = customer.street_number or parent.street_number
+            if not stret_number:
+                stret_number = ''
+            street = stret_name + street_name_space + stret_number
             records.append(street)
             records.append(pLine.proof_zip)
             records.append(customer.city or parent.city or '')
@@ -94,10 +108,11 @@ class NSMDeliveryListReport(ReportXlsx):
             if pLine.line_id.proof_number_payer_id and pLine.line_id.proof_number_payer_id.id == customer.id:
                 amount += pLine.line_id.proof_number_amt_payer
             records.append(amount)
-            records.append(pLine.line_id.product_template_id.name or '')
+#             records.append(pLine.line_id.product_template_id.name or '')
             issue_date_cov = datetime.datetime.strptime(pLine.issue_date, '%Y-%m-%d')
             issue_date_c = datetime.datetime.strftime(issue_date_cov , '%d/%m/%Y')
             records.append(issue_date_c)
+            records.append(pLine.title.name)
             
             return records
 
@@ -112,8 +127,8 @@ class NSMDeliveryListReport(ReportXlsx):
                 #     row_datas.append(_prepare_data(part, orderLine))
             return row_datas
 
-        header = ['Country Code', 'KIX Postal Code', 'Account', '', 'Street', 'Postal Code', 'City',
-                  'Country', 'Voucher Copy', 'Product Name', 'Issue Date']
+        header = ['LANDCODE', 'KIXCODE', 'NAAM', 'TAV', 'ADRES', 'POSTCODE', 'PLAATS',
+                  'LAND', 'AANTAL','Issue Date','TITLE']
 
         row_datas = _form_data(proofLines)
 
