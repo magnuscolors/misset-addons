@@ -33,13 +33,26 @@ class NSMDeliveryListReport(ReportXlsx):
             records.append(pLine.proof_country_code or '')
             records.append(_kix_code(customer))
             account_name = ''
-            
+            initial = ''
+            firstname = ''
+            infix = ''
+            account_details = ''
+            tital = ''
             if parent:
                 account_name = parent.name
             else:
-                account_name = customer.name or ''
+                if customer.title:
+                    tital = customer.title.name + " "
+                if customer.initials:
+                    initial= customer.initials + " "
+                if customer.firstname:
+                    firstname = customer.firstname + " "
+                if customer.infix:
+                    infix = customer.infix
+                account_details = str(tital) + str(initial) + str(firstname) + str(infix)
+#                 account_name = customer.name or ''
                 
-            records.append(account_name or '')
+            records.append(account_details or '')
             
             initial = ''
             firstname = ''
