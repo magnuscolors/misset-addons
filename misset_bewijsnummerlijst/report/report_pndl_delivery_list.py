@@ -109,9 +109,9 @@ class NSMDeliveryListReport(ReportXlsx):
                 amount += pLine.line_id.proof_number_amt_payer
             records.append(amount)
 #             records.append(pLine.line_id.product_template_id.name or '')
-            issue_date_cov = datetime.datetime.strptime(pLine.issue_date, '%Y-%m-%d')
-            issue_date_c = datetime.datetime.strftime(issue_date_cov , '%d/%m/%Y')
-            records.append(issue_date_c)
+#             issue_date_cov = datetime.datetime.strptime(pLine.issue_date, '%Y-%m-%d')
+#             issue_date_c = datetime.datetime.strftime(issue_date_cov , '%d/%m/%Y')
+#             records.append(issue_date_c)
             records.append(pLine.title.name)
             
             return records
@@ -128,7 +128,7 @@ class NSMDeliveryListReport(ReportXlsx):
             return row_datas
 
         header = ['LANDCODE', 'KIXCODE', 'NAAM', 'TAV', 'ADRES', 'POSTCODE', 'PLAATS',
-                  'LAND', 'AANTAL','Issue Date','TITLE']
+                  'LAND', 'AANTAL','TITEL']
 
         row_datas = _form_data(proofLines)
 
