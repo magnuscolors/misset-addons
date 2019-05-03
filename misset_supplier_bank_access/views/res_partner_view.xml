@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    	<record id="view_partner_form_inherit" model="ir.ui.view">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+             <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="priority" eval="2"/>
+            <field name="arch" type="xml">
+            <xpath expr="//group[@name='purchase']" position="replace">
+            	<group string="Purchase" name="purchase">
+                       <field name="supplier" readonly="1"/>
+ 	               </group>
+            </xpath>
+            </field>
+        </record>
+        
+        <record id="view_partner_form_inherit2" model="ir.ui.view">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+             <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="priority" eval="3"/>
+          	<field name="groups_id" eval="[(6, 0, [ref('misset_supplier_bank_access.supplier_full_access')])]"/>
+            <field name="arch" type="xml">
+            <xpath expr="//group[@name='purchase']" position="replace">
+            	<group string="Purchase" name="purchase">
+                       <field name="supplier" readonly="0"/>
+                 </group>
+            </xpath>
+            </field>
+        </record>
+            
+        <record id="view_partner_form_inherit_only" model="ir.ui.view">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+             <field name="inherit_id" ref="account.partner_view_buttons"/>
+            <field name="priority" eval="1"/>
+            <field name="arch" type="xml">
+            <xpath expr="//group[@name='banks']/div/button" position="before">
+            	<field name="check_group" invisible="1"/>
+            </xpath>
+            <xpath expr="//group[@name='banks']/div/button" position="attributes">
+            <attribute name="attrs">{'invisible':[('check_group', '=', False)]}</attribute>
+            </xpath>
+            </field>
+        </record>
+        
+        <record id="view_partner_form_inherit_credit_card" model="ir.ui.view">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+             <field name="inherit_id" ref="payment.view_partners_form_payment_defaultcreditcard"/>
+            <field name="priority" eval="1"/>
+            <field name="arch" type="xml">
+            <xpath expr="//button[@name='%(payment.payment_token_action)d']" position="attributes">
+            <attribute name="attrs">{'invisible':[('check_group', '=', False)]}</attribute>
+            </xpath>
+            </field>
+        </record>
+        
+        </data>
+ </odoo>

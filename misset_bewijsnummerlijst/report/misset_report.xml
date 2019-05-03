@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+            id="nsm_sale_advertising_order.report_nsm_proof_delivery_list_report_xlsx"
+            model="proof.number.delivery.list"
+            string="Bewijsnummerlijst xlsx"
+            report_type="xlsx"
+            name="report_pndl_delivery_list1.xlsx"
+            file="report_pndl_delivery_list1.xlsx"
+            attachment_use="False"
+        />
+    </data>
+</odoo>

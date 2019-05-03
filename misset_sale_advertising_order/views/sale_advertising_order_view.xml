@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="nsm_sale_advertising_order.view_indeellijst_list_tree" model="ir.ui.view">
+        <field name="name">sale.order.line.indeellijst.tree</field>
+        <field name="model">sale.order.line</field>
+        <field name="arch" type="xml">
+		<tree string="Indeellijst Lists" create="false" edit="false" delete="false">
+	              <field name="order_id"/>
+	              <field name="order_advertiser_id"/>
+	              <field name="id" string="Orderline ID"/>
+	              <field name="material_id" string="Copy ID"/>
+	              <field name="title"/>
+	              <field name="adv_issue"/>
+	              <field name="issue_date"/>
+	              <field name="ad_class"/>
+	              <field name="product_template_id"/>
+	              <field name="product_uom_qty"/>
+	              <field name="price_subtotal"/>
+	              <field name="page_reference"/>
+	              <field name="layout_remark"/>
+	              <field name="name" string="Mapping Remark"/>
+	              <field name="product_width" string="Breedte"/>
+	              <field name="product_height" string="Hoogte"/>
+	              <field name="analytic_tag_ids"/>
+	    </tree>
+	    </field>
+	    </record>
+	    
+		<record model="ir.ui.view" id="sale_advertising_issue_form_inherit">
+			<field name="name">sale.advertising.issue.form</field>
+			<field name="type">form</field>
+			<field name="model">sale.advertising.issue</field>
+			<field name="inherit_id" ref="sale_advertising_order.sale_advertising_issue_form"/>
+			<field name="arch" type="xml">
+			<field name="issue_date" position="after">
+				<field name="dtp_deadline"/>
+			</field>
+			</field>
+		</record>
+		
+		<record id="view_order_form_advertising" model="ir.ui.view">
+            <field name="name">sale.order.form.advertising</field>
+            <field name="model">sale.order</field>
+			<field name="priority">20</field>
+			<field name="inherit_id" ref="sale_advertising_order.view_order_form_advertising"></field>
+            <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_submit']" position="attributes">
+            	<attribute name="groups">sale_advertising_order.group_traffic_user</attribute>
+            </xpath>
+            </field>
+       </record>
+	</data>
+</odoo>

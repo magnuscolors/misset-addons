@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_invoice_supplier_form_nsm_inherit" model="ir.ui.view">
+        <field name="name">account.invoice.name</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="nsm_custom_view_accounting.invoice_supplier_form_account_nsm_custom_view3"/>
+        <field name="arch" type="xml">
+          <xpath expr="//field[@name='team_id']" position="replace">
+          	<field name="team_id" domain="[('use_invoices','=',True)]" />
+          </xpath>
+        </field>
+    </record> 
+    
+</odoo>

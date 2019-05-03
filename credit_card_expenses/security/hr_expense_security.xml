@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="group_credit_card_expenses" model="res.groups">
+        <field name="name">credit card expenses</field>
+        <field name="category_id" ref="base.module_category_hr_expense"/>
+    </record>
+    
+    <record id="group_expenses_superuser" model="res.groups">
+        <field name="name">Expenses Superuser</field>
+        <field name="category_id" ref="base.module_category_hr_expense"/>
+    </record>
+    
+</odoo>
