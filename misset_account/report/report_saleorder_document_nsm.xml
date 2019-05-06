@@ -1,0 +1,155 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+	<template t-name="nsm_sale_advertising_order.report_saleorder_document_nsm">
+    <t t-call="report_qweb_operating_unit.external_layout_ou">
+        <t t-set="doc" t-value="doc.with_context({'lang':doc.partner_id.lang})"/>
+        <div class="page" style="font-family: 'Titillium Web', sans-serif;">
+            <div class="oe_structure"/>
+            <div class="row" style="padding-left:75px;">
+                <div name="order_title" class="col-xs-5 col-xs-offset-7" style="padding:0px;">
+                    <h3>
+                        <span t-if="doc.state in ['sale','done']">ORDER CONFIRMATION</span>
+                        <span t-if="doc.state not in ['sale','done']">QUOTATION</span>
+                    </h3>
+                </div>
+            </div>
+
+            <div class="row mt32 mb32" style="padding-left:85px;">
+                 <div class="col-xs-7" style="padding:0px;">
+                     <div class="col-xs-4" style="padding:0px;">
+                         <span t-if="doc.state in ['sale','done']"><strong>Order Date</strong></span>
+                         <span t-if="doc.state not in ['sale','done']"><strong>Quotation Date</strong></span>
+                         <br/>
+                         <span t-if="doc.state in ['sale','done']"><strong>Order Number</strong></span>
+                         <span t-if="doc.state not in ['sale','done']"><strong>Quotation Number</strong></span>
+                         <br/>
+                         <span><strong>Customer Code</strong></span>
+                     </div>
+                     <div class="col-xs-7" style="padding:0px;">
+                         <span t-field="doc.date_order"/>
+                         <br/>
+                         <span t-field="doc.name"/>
+                         <br/>
+                         <span t-field="doc.partner_id.ref"/>
+                     </div>
+                 </div>
+
+                 <div name="invoice_address" class="col-xs-5" style="padding:0px;">
+                    <div t-field="doc.partner_invoice_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"/>
+                    <p t-if="doc.partner_id.vat">VAT: <span t-field="doc.partner_id.vat"/></p>
+                    <p t-if="doc.customer_contact">Attn.: <span t-field="doc.customer_contact.name"/></p>
+                 </div>
+
+                <br/><br/>
+                 <t>
+                     <div class="col-xs-7" style="padding:0px;">
+                         <div class="col-xs-4" style="padding:0px;">
+                             <strong>Advertiser</strong>
+                         </div>
+                         <div class="col-xs-7" style="padding:0px;">
+                             <span t-field="doc.published_customer.name"/>
+                         </div>
+                     </div>
+                     <div class="col-xs-7" style="padding:0px;">
+                         <div class="col-xs-4" style="padding:0px;">
+                             <strong>Opportunity Subject</strong>
+                         </div>
+                         <div class="col-xs-7" style="padding:0px;">
+                             <span t-field="doc.opportunity_subject"/>
+                         </div>
+                     </div>
+                 </t>
+
+            </div>
+
+            <!-- Is there a discount on at least one line? -->
+            <t t-set="display_discount" t-value="any([l.discount for l in doc.order_line])"/>
+            <!--<t t-set="display_Cdiscount" t-value="any([l.computed_discount for l in doc.order_line])"/>-->
+            <t t-set="tot_Cdiscount" t-value="sum([(l.price_unit * l.product_uom_qty) - l.subtotal_before_agency_disc for l in doc.order_line])"/>
+
+            <div name="order_lines" class="row" style="padding-left:85px;padding-right:15px;">
+                <t t-call="nsm_sale_advertising_order.report_saleorderlines_document_nsm"/>
+            </div>
+
+            <div class="row" name="total">
+                <div class="col-xs-4 pull-right">
+                    <table class="table table-condensed">
+                        <tr class="border-black">
+                            <td><strong>Gross</strong></td>
+                            <td class="text-right">
+                                <span t-if="doc.pricelist_id and doc.pricelist_id.currency_id" t-field="doc.pricelist_id.currency_id.symbol"/><span> </span><span t-esc="'%.2f'% doc.amount_untaxed"/>
+                            </td>
+                        </tr>
+                        <t t-if="doc.display_discount_to_customer">
+                            <tr>
+                                <td>Computed discount</td>
+                                <td class="text-right">
+                                    <span t-if="doc.pricelist_id and doc.pricelist_id.currency_id" t-field="doc.pricelist_id.currency_id.symbol"/><span> </span><span t-esc="'%.2f'% tot_Cdiscount"/>
+                                </td>
+                            </tr>
+                        </t>
+                        <tr>
+                            <td><strong>Taxes</strong></td>
+                            <td class="text-right">
+                                <span t-if="doc.pricelist_id and doc.pricelist_id.currency_id" t-field="doc.pricelist_id.currency_id.symbol"/><span> </span><span t-esc="'%.2f'% doc.amount_tax"/>
+                            </td>
+                        </tr>
+
+                        <tr class="border-black">
+                            <td><strong>Total</strong></td>
+                            <td class="text-right">
+                                <span t-if="doc.pricelist_id and doc.pricelist_id.currency_id" t-field="doc.pricelist_id.currency_id.symbol"/><span> </span><span t-esc="'%.2f'% doc.amount_total"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <strong>
+                <p t-field="doc.note" class="text-center" style="padding-left:75px;padding-right:70px;padding-top:30px;"/>
+            </strong>
+
+            <!--p t-if="doc.state not in ['draft','sale'] and doc.payment_term_id.note" class='text-center' style="padding-left:70px;padding-right:70px;padding-top:30px;">
+                <span t-field="doc.payment_term_id.note"/>
+            </p-->
+
+            <strong>
+                <p t-field="doc.note" class="text-center" style="font-size:8pt;padding-left:75px;padding-right:70px;padding-top:30px;"/>
+            </strong>
+
+            <p/>
+            <p/>
+            <!--<p style="padding-left:75px;padding-right:15px;">-->
+                <!--We would like to thank you for your request and see your response as soon as possible.-->
+            <!--</p>-->
+            <p t-if="doc.state not in ['sale','done']" style="padding-left:75px;padding-right:15px;">
+                We would like to thank you for your request. We are looking forward to receiving your response as soon as possible.
+            </p>
+            <p t-if="doc.state in ['sale','done']" style="padding-left:75px;padding-right:15px;">
+                We would like to thank you and take good care of your order placement.
+            </p>
+            <br/>
+            <div class="row" style="padding-left:75px;page-break-inside:avoid;">
+                <div class="col-xs-5">
+                    <strong><p>Sincerely,</p></strong>
+                    <span t-field="doc.operating_unit_id.name"/>
+                    <br/>
+                    <span t-field="doc.user_id.signature"/> 
+                </div>
+                <div t-if="doc.state in ['draft','sent']" class="col-xs-4 pull-right">
+                    <p><strong>For approval:</strong></p>
+                    <span/>
+                    <br/>
+                    <span>..............................</span>
+                    <br/>
+                    <span t-field="doc.partner_id.name"/>
+                </div>
+                <br/>
+            </div>
+            <div class="oe_structure"/>
+        </div>
+    </t>
+</template>
+</data>
+</odoo>
