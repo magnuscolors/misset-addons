@@ -25,7 +25,8 @@
     'data': [
         # 'security/ir.model.access.csv',
         'report/report_invoice.xml',
-        'report/report_saleorder_document_nsm.xml'
+        'report/report_saleorder_document_nsm.xml',
+        'report/report_saleorderlines_document_nsm.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
