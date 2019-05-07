@@ -45,7 +45,7 @@
 			<field name="priority">20</field>
 			<field name="inherit_id" ref="sale_advertising_order.view_order_form_advertising"></field>
             <field name="arch" type="xml">
-            <xpath expr="//button[@name='action_submit']" position="attributes">
+            <xpath expr="//button[@name='action_confirm']" position="attributes">
             	<attribute name="groups">sale_advertising_order.group_traffic_user</attribute>
             </xpath>
             </field>

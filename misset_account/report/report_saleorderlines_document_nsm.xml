@@ -1,0 +1,184 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+<template t-name="nsm_sale_advertising_order.report_saleorderlines_document_nsm">
+
+    <t t-foreach="doc.order_lines_layouted()" t-as="page">
+
+        <table class="table table-condensed">
+
+            <thead>
+
+                <tr>
+                    <th width="14%">Date</th>
+
+                    <!--<t><th width="10%">Edition</th></t>-->
+
+                    <t><th width="18%">Advertising issue</th></t>
+
+                    <th width="8%">Product</th>
+
+                    <th width="6%" class="text-right">Volume</th>
+
+                    <th width="10%" t-if="doc.display_discount_to_customer" class="text-right">Unit price</th>
+
+                    <th width="10%" t-if="not doc.advertising_agency" class="text-right">Actual unit price</th>
+
+                    <th width="10%" t-if="doc.display_discount_to_customer" class="text-right">Computed discount(%)</th>
+
+                    <th width="10%" t-if="doc.advertising_agency" class="text-right">SBAD</th>
+
+                    <th width="10%" t-if="doc.advertising_agency" class="text-right">Agency Disc(%)</th>
+
+                    <!--<th width="10%" t-if="display_Cdiscount" class="text-right">Computed Discount</th>-->
+
+                    <th name="line_amount_th" width="10%" class="text-right">Tax excluded price</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody class="sale_tbody">
+
+                <t t-foreach="page" t-as="layout_category">
+
+
+                    <t t-if="layout_category_size &gt; 1 or page_size &gt; 1" groups="sale.group_sale_layout">
+
+                        <tr class="active">
+
+                            <td colspan="7" style="font-weight: bold; border-bottom: 1px solid black;">&amp;bull;
+
+                                <t t-esc="layout_category['name']"/>
+
+                            </td>
+
+                        </tr>
+
+                    </t>
+
+
+                    <!-- Lines associated -->
+
+                    <t t-foreach="layout_category['lines']" t-as="l">
+
+                        <tr>
+
+                            <td t-if="l.ad_class.date_type == 'validity'">
+
+                                <span t-field="l.from_date"/><span> - </span><span t-field="l.to_date"/>
+
+                            </td>
+
+                            <td t-if="l.ad_class.date_type != 'validity'">
+
+                                <span t-field="l.issue_date"/></td>
+
+                            <t><td><span t-if="l.adv_issue and l.adv_issue.default_note" t-field="l.adv_issue.default_note"/><span t-if="l.adv_issue and not l.adv_issue.default_note" t-field="l.adv_issue.name"/></td></t>
+
+                            <td t-if="l.product_id"><span t-field="l.product_id.name"/></td>
+
+                            <td class="text-right">
+
+                                <span t-esc="'%.2f'% l.product_uom_qty"/>
+
+                                <span t-field="l.product_uom" groups="product.group_uom"/>
+
+                            </td>
+
+                            <td t-if="doc.display_discount_to_customer" class="text-right">
+
+                                <span t-if="doc.pricelist_id and doc.pricelist_id.currency_id" t-field="doc.pricelist_id.currency_id.symbol"/><span> </span><span t-esc="'%.2f'% l.price_unit"/>
+
+                            </td>
+
+                            <td t-if="not doc.advertising_agency" class="text-right">
+
+                                <span t-if="doc.pricelist_id and doc.pricelist_id.currency_id" t-field="doc.pricelist_id.currency_id.symbol"/><span> </span><span t-esc="'%.2f'% l.actual_unit_price"/>
+
+                            </td>
+
+                            <td t-if="doc.display_discount_to_customer" class="text-right">
+
+                                <span t-esc="'%.2f'% l.computed_discount"/>
+
+                            </td>
+
+                            <td t-if="doc.advertising_agency" class="text-right">
+
+                                <span t-if="doc.pricelist_id and doc.pricelist_id.currency_id" t-field="doc.pricelist_id.currency_id.symbol"/><span> </span><span t-esc="'%.2f'% l.subtotal_before_agency_disc"/>
+
+                            </td>
+
+                            <td t-if="doc.advertising_agency" class="text-right">
+
+                                <span t-esc="'%.2f'% l.discount"/>
+
+                            </td>
+
+                            <!--<td t-if="display_Cdiscount" class="text-right">
+
+                                <span t-esc="'%.2f'% l.computed_discount"/>
+
+                            </td>-->
+
+                            <td name="line_amount_td" class="text-right">
+
+                                <span t-if="doc.pricelist_id and doc.pricelist_id.currency_id" t-field="doc.pricelist_id.currency_id.symbol"/><span> </span><span t-esc="'%.2f'% l.price_subtotal"/>
+
+                            </td>
+
+                        </tr>
+
+                        <t>
+
+                            <tr t-if="l.ad_number">
+
+                                <td/>
+
+                                <td colspan="2" style="font-size:11px;font-style:italic;"><span style="font-weight:bold;">Reference : </span><span t-field="l.ad_number"/></td>
+
+                            </tr>
+
+                        </t>
+
+                    </t>
+
+
+                    <t t-if="(layout_category_size &gt; 1 or page_size &gt; 1) and layout_category['subtotal']" groups="sale.group_sale_layout">
+
+                        <tr class="text-right">
+
+                            <td colspan="6">
+
+                                <strong>Subtotal: </strong>
+
+                                <t t-set="subtotal" t-value="sum(line.price_subtotal for line in layout_category['lines'])"/>
+
+                                <span t-if="doc.pricelist_id and doc.pricelist_id.currency_id" t-field="doc.pricelist_id.currency_id.symbol"/><span> </span><span t-esc="'%.2f'% subtotal"/>
+
+                            </td>
+
+                        </tr>
+
+                    </t>
+
+
+                </t>
+
+            </tbody>
+
+        </table>
+
+
+        <t t-if="page_index &lt; page_size - 1" groups="sale.group_sale_layout">
+
+            <p style="page-break-before:always;"> </p>
+
+        </t>
+
+    </t>
+
+</template>
+</data>
+</odoo>

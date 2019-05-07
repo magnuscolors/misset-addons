@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="operating_unit_report_layout.paperformat_ou_layout" model="report.paperformat">
+            <field name="margin_top">50</field>
+            <field name="header_spacing">50</field>
+        </record>
+    </data>
+</odoo>
