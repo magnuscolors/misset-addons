@@ -7,11 +7,11 @@ class HrExpense(models.Model):
     _inherit = "hr.expense"
 
     def _get_recursive_departments(self):
-
+        analytic_account = self.env['account.analytic.account']
         employee = self.env.user._get_related_employees()
         department_id = employee.department_id.id or False
         if not department_id:
-            return []
+            return analytic_account
 
         query = """
                     WITH RECURSIVE deptgroup AS (
