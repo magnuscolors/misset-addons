@@ -39,9 +39,10 @@ This module adds "department_id" to the analytic account domain in the hr_expens
     """,
     'author'  : 'Magnus - STVDB',
     'website' : 'http://www.magnus.nl',
-    'depends' : ['nsm_expense'],
+    'depends' : ['nsm_expense','nsm_account'],
     'data'    : [
-        'views/hr_expense_views.xml',
+        # 'views/hr_expense_views.xml',
+        'views/account_views.xml',
         ],
     'demo' : [],
     'installable': True
