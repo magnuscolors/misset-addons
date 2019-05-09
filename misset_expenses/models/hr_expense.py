@@ -30,7 +30,7 @@ class HrExpense(models.Model):
 
         department_ids = list(set([y for x in result for y in x]))
 
-        analytic_account = self.env['account.analytic.account'].search([('department_id', 'in', department_ids)])
+        analytic_account = analytic_account.search([('department_id', 'in', department_ids)])
         return analytic_account
 
 
