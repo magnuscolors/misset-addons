@@ -33,15 +33,30 @@ class SaleOrderLine(models.Model):
     @api.multi
     def material_received(self):
         for rec in self:
-            rec.write({'material_status':"Received",'date_material_received':datetime.now()})
+            material_status = 'Received'
+            date_material_received = datetime.now()
+            if rec.recurring and rec.recurring_id:
+                material_status = rec.recurring_id.material_status
+                date_material_received = rec.date_material_received
+            rec.write({'material_status':material_status, 'date_material_received':date_material_received})
     
     @api.multi
     def material_pending(self):
         for rec in self:
-            rec.write({'material_status':"Pending",'date_material_received':datetime.now()})
+            material_status = 'Pending'
+            date_material_received = datetime.now()
+            if rec.recurring and rec.recurring_id:
+                material_status = rec.recurring_id.material_status
+                date_material_received = rec.date_material_received
+            rec.write({'material_status':material_status,'date_material_received':date_material_received})
             
     @api.multi
     def material_recurring(self):
         for rec in self:
-            rec.write({'material_status':"Recurring",'date_material_received':datetime.now()})
+            material_status = 'Recurring'
+            date_material_received = datetime.now()
+            if rec.recurring and rec.recurring_id:
+                material_status = rec.recurring_id.material_status
+                date_material_received = rec.date_material_received
+            rec.write({'material_status':material_status, 'date_material_received':date_material_received})
         
