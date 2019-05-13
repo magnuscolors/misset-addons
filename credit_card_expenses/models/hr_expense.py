@@ -73,10 +73,12 @@ class HrExpense(models.Model):
             payment_id = False
             total, total_currency, move_lines = expense._compute_expense_totals(company_currency, move_lines, acc_date)
             if expense.is_from_crdit_card:
-                if not expense.sheet_id.bank_journal_id.default_credit_account_id:
+                if not expense.sheet_id.company_id.creditcard_decl_journal_id:
                     raise UserError(_("No credit account found for the %s journal, please configure one.") % (expense.sheet_id.bank_journal_id.name))
-                emp_account = expense.sheet_id.bank_journal_id.default_credit_account_id.id
-                journal = expense.sheet_id.bank_journal_id
+#                 emp_account = expense.sheet_id.bank_journal_id.default_credit_account_id.id
+                emp_account = expense.sheet_id.company_id.creditcard_decl_journal_id.default_credit_account_id.id
+
+                journal = expense.sheet_id.company_id.creditcard_decl_journal_id
                 #create payment
                 payment_methods = (total < 0) and journal.outbound_payment_method_ids or journal.inbound_payment_method_ids
                 journal_currency = journal.currency_id or journal.company_id.currency_id
@@ -94,10 +96,12 @@ class HrExpense(models.Model):
                 })
                 payment_id = payment.id
             else:
+#                 if not expense.sheet_id.company_id.decl_journal_id.default_credit_account_id:
+#                     raise UserError(_("No credit account found for the %s journal, please configure one. ") % (expense.sheet_id.company_id.decl_journal_id.name))
                 if not expense.employee_id.address_home_id:
-                    raise UserError(_("No Home Address found for the employee %s, please configure one.") % (expense.employee_id.name))
+                     raise UserError(_("No Home Address found for the employee %s, please configure one.") % (expense.employee_id.name))
                 emp_account = expense.employee_id.address_home_id.property_account_payable_id.id
-
+#                 emp_account = expense.sheet_id.company_id.decl_journal_id.default_credit_account_id.id
             aml_name = expense.employee_id.name + ': ' + expense.name.split('\n')[0][:64]
             move_lines.append({
                     'type': 'dest',
@@ -109,7 +113,6 @@ class HrExpense(models.Model):
                     'currency_id': diff_currency_p and expense.currency_id.id or False,
                     'payment_id': payment_id,
                     })
-
             #convert eml into an osv-valid format
             lines = map(lambda x: (0, 0, expense._prepare_move_line(x)), move_lines)
             move.with_context(dont_create_taxes=True).write({'line_ids': lines})
