@@ -37,7 +37,7 @@ class SaleOrderLine(models.Model):
             date_material_received = datetime.now()
             if rec.recurring and rec.recurring_id:
                 material_status = rec.recurring_id.material_status
-                date_material_received = rec.date_material_received
+                date_material_received = rec.recurring_id.date_material_received
             if rec.invoice_status == 'invoiced':
                 if not isinstance(date_material_received, str):
                     date_material_received = str(date_material_received)
@@ -56,7 +56,7 @@ class SaleOrderLine(models.Model):
             date_material_received = datetime.now()
             if rec.recurring and rec.recurring_id:
                 material_status = rec.recurring_id.material_status
-                date_material_received = rec.date_material_received
+                date_material_received = rec.recurring_id.date_material_received
             if rec.invoice_status == 'invoiced':
                 if not isinstance(date_material_received, str):
                     date_material_received = str(date_material_received)
@@ -75,7 +75,7 @@ class SaleOrderLine(models.Model):
             date_material_received = datetime.now()
             if rec.recurring and rec.recurring_id:
                 material_status = rec.recurring_id.material_status
-                date_material_received = rec.date_material_received
+                date_material_received = rec.recurring_id.date_material_received
             if rec.invoice_status == 'invoiced':
                 if not isinstance(date_material_received, str):
                     date_material_received = str(date_material_received)
