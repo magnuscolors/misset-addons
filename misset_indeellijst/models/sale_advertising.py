@@ -38,7 +38,16 @@ class SaleOrderLine(models.Model):
             if rec.recurring and rec.recurring_id:
                 material_status = rec.recurring_id.material_status
                 date_material_received = rec.date_material_received
-            rec.write({'material_status':material_status, 'date_material_received':date_material_received})
+            if rec.invoice_status == 'invoiced':
+                if not isinstance(date_material_received, str):
+                    date_material_received = str(date_material_received)
+                self.env.cr.execute(
+                    """UPDATE sale_order_line SET material_status = %s, date_material_received = %s
+                    WHERE id = %s""",
+                    (material_status, date_material_received, rec.id),
+                )
+            else:
+                rec.write({'material_status':material_status, 'date_material_received':date_material_received})
     
     @api.multi
     def material_pending(self):
@@ -48,7 +57,16 @@ class SaleOrderLine(models.Model):
             if rec.recurring and rec.recurring_id:
                 material_status = rec.recurring_id.material_status
                 date_material_received = rec.date_material_received
-            rec.write({'material_status':material_status,'date_material_received':date_material_received})
+            if rec.invoice_status == 'invoiced':
+                if not isinstance(date_material_received, str):
+                    date_material_received = str(date_material_received)
+                self.env.cr.execute(
+                    """UPDATE sale_order_line SET material_status = %s, date_material_received = %s
+                    WHERE id = %s""",
+                    (material_status, date_material_received, rec.id),
+                )
+            else:
+                rec.write({'material_status':material_status,'date_material_received':date_material_received})
             
     @api.multi
     def material_recurring(self):
@@ -58,5 +76,14 @@ class SaleOrderLine(models.Model):
             if rec.recurring and rec.recurring_id:
                 material_status = rec.recurring_id.material_status
                 date_material_received = rec.date_material_received
-            rec.write({'material_status':material_status, 'date_material_received':date_material_received})
+            if rec.invoice_status == 'invoiced':
+                if not isinstance(date_material_received, str):
+                    date_material_received = str(date_material_received)
+                self.env.cr.execute(
+                    """UPDATE sale_order_line SET material_status = %s, date_material_received = %s
+                    WHERE id = %s""",
+                    (material_status, date_material_received, rec.id),
+                )
+            else:
+                rec.write({'material_status':material_status, 'date_material_received':date_material_received})
         
