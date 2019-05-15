@@ -8,6 +8,9 @@
             <field name="arch" type="xml">
                 <tree string="Contacts">
                 	<field name="lastname"/>
+                    <field name="lastname" position="before">
+                        <field name="ref" string="Customer ref."/>
+                    </field>
                 	<field name="city"/>
                     <field name="country_id"/>
                     <field name="email"/>
