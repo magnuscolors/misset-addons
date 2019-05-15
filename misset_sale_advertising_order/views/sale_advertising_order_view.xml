@@ -20,8 +20,8 @@
 	              <field name="page_reference"/>
 	              <field name="layout_remark"/>
 	              <field name="name" string="Mapping Remark"/>
-	              <field name="product_width" string="Breedte"/>
-	              <field name="product_height" string="Hoogte"/>
+	              <field name="product_width" string="Width"/>
+	              <field name="product_height" string="Height"/>
 	              <field name="analytic_tag_ids"/>
 	    </tree>
 	    </field>
