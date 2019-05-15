@@ -33,9 +33,9 @@
     'description': "This module adds customised functioality to the CRM module for Misset Uitgeverij B.V.",
     'author'  : 'Magnus - DK',
     'website' : 'http://www.magnus.nl',
-    'depends' : ['sale_advertising_order','crm'],
+    'depends' : ['sale_advertising_order','crm','partner_firstname'],
     'data'    : [
-       'views/res_partner_view.xml',
+        'views/res_partner_view.xml',
         ],
     'demo' : [],
     'installable': True
