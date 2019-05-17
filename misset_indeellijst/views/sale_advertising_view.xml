@@ -8,7 +8,7 @@
             <field name="inherit_id" ref="nsm_sale_advertising_order.view_indeellijst_list_tree"></field>
             <field name="arch" type="xml">
                 <xpath expr="//tree" position="attributes">
-                    <attribute name="default_order">title,adv_issue,material_status</attribute>
+                    <attribute name="default_order">title,adv_issue,order_advertiser_id,material_status</attribute>
                 </xpath>
                 <field name="analytic_tag_ids" position="after">
                     <field name="material_status"/>
