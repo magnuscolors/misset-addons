@@ -34,7 +34,8 @@
     'author'  : 'Magnus - DK',
     'website' : 'http://www.magnus.nl',
     'depends' : ['nsm_sale_advertising_order','partner_street_number'],
-    'data'    : ['report/misset_report.xml',
+    'data'    : [
+                'report/misset_report.xml',
                  ],
     'demo' : [],
     'installable': True
