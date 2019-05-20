@@ -20,8 +20,8 @@
 	              <field name="page_reference"/>
 	              <field name="layout_remark"/>
 	              <field name="name" string="Mapping Remark"/>
-	              <field name="product_width" string="Breedte"/>
-	              <field name="product_height" string="Hoogte"/>
+	              <field name="product_width" string="Width"/>
+	              <field name="product_height" string="Height"/>
 	              <field name="analytic_tag_ids"/>
 	    </tree>
 	    </field>
@@ -45,7 +45,7 @@
 			<field name="priority">20</field>
 			<field name="inherit_id" ref="sale_advertising_order.view_order_form_advertising"></field>
             <field name="arch" type="xml">
-            <xpath expr="//button[@name='action_submit']" position="attributes">
+            <xpath expr="//button[@name='action_confirm']" position="attributes">
             	<attribute name="groups">sale_advertising_order.group_traffic_user</attribute>
             </xpath>
             </field>

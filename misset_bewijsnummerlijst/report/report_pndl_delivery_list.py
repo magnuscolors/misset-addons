@@ -130,7 +130,7 @@ class NSMDeliveryListReport(ReportXlsx):
             return row_datas
 
         header = ['LANDCODE', 'KIXCODE', 'NAAM', 'TAV', 'ADRES', 'POSTCODE', 'PLAATS',
-                  'LAND', 'AANTAL','Issue Date','TITLE']
+                  'LAND', 'AANTAL','TITEL']
 
         row_datas = _form_data(proofLines)
 
