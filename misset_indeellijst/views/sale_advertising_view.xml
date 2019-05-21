@@ -16,9 +16,6 @@
                     <field name="id"/>
                     <field name="material_id"/>
                 </field>
-                <field name="title" position="attributes">
-                    <attribute name="invisible">1</attribute>
-                </field>
                 <field name="adv_issue" position="after">
                     <field name="issue_date"/>
                     <field name="from_date" string="Start date"/>
