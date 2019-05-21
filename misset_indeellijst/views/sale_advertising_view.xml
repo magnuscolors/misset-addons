@@ -21,9 +21,6 @@
                     <field name="from_date" string="Start date"/>
                     <field name="to_date" string="End date"/>
                 </field>
-                <field name="price_subtotal" position="attributes">
-                    <attribute name="invisible">1</attribute>
-                </field>
                 <field name="product_uom_qty" position="after">
                     <field name="ad_number"/>
                 </field>
