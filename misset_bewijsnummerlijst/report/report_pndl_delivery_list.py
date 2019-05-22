@@ -11,16 +11,6 @@ class NSMDeliveryListReport(ReportXlsx):
 
     def generate_xlsx_report(self, workbook, data, proofLines):
 
-        def _get_title(orderLine):
-            title = []
-            for advtitle in orderLine.title_ids:
-                if advtitle.product_attribute_value_id:
-                    title.append(advtitle.product_attribute_value_id.name)
-            if orderLine.title.product_attribute_value_id:
-                title.append(orderLine.title.product_attribute_value_id.name)
-            title = ",".join(list(set(title))) if title else ' '
-            return title
-
         #customer.parent.zip
         def _kix_code(customer):
             nonkix = customer.zip or customer.parent.zip or ''
@@ -30,8 +20,8 @@ class NSMDeliveryListReport(ReportXlsx):
         def _prepare_data(customer, pLine):
             records = []
             parent = customer.parent_id
-            records.append(u''+str(pLine.proof_country_code) or '')
-            records.append(u''+str(_kix_code(customer)))
+            records.append(str(pLine.proof_country_code).encode('utf-8') or '')
+            records.append(str(_kix_code(customer)).encode('utf-8'))
             account_name = ''
             initial = ''
             firstname = ''
@@ -57,7 +47,7 @@ class NSMDeliveryListReport(ReportXlsx):
                 account_details = str(tital) + str(initial) + str(firstname) + str(infix) + str(last_name)
 #                 account_name = customer.name or ''
                 
-            records.append(u''+account_details or '')
+            records.append(account_details.encode('utf-8') or '')
             
             initial = ''
             firstname = ''
@@ -87,7 +77,7 @@ class NSMDeliveryListReport(ReportXlsx):
 #             if pLine.proof_number_payer.infix:
 #                 infix = pLine.proof_number_payer.infix + ' '
                 
-            records.append(u''+ str(blank_details))
+            records.append(str(blank_details).encode('utf-8'))
             
             street_name_space = ' '
             stret_name = ''
@@ -100,10 +90,10 @@ class NSMDeliveryListReport(ReportXlsx):
             if not stret_number:
                 stret_number = ''
             street = stret_name + street_name_space + stret_number
-            records.append(u''+street)
+            records.append(street.encode('utf-8'))
             records.append(pLine.proof_zip)
-            records.append(u''+customer.city or parent.city or '')
-            records.append(u''+customer.country_id.name or parent.country_id.name or '')
+            records.append(customer.city.encode('utf-8') or parent.city.encode('utf-8') or '')
+            records.append(customer.country_id.name.encode('utf-8') or parent.country_id.name.encode('utf-8') or '')
             amount = 0
             if customer.id in pLine.line_id.proof_number_adv_customer.ids:
                 amount += pLine.line_id.proof_number_amt_adv_customer
@@ -114,7 +104,7 @@ class NSMDeliveryListReport(ReportXlsx):
             issue_date_cov = datetime.datetime.strptime(pLine.issue_date, '%Y-%m-%d')
             issue_date_c = datetime.datetime.strftime(issue_date_cov , '%d/%m/%Y')
             records.append(issue_date_c)
-            records.append(u''+str(pLine.title.name))
+            records.append(str(pLine.title.name).encode('utf-8'))
             
             return records
 
@@ -147,4 +137,4 @@ class NSMDeliveryListReport(ReportXlsx):
         else:
             raise UserError(_('No record found to print!'))
 
-NSMDeliveryListReport('report.report_pndl_delivery_list1.xlsx', 'sale.order.line')
+NSMDeliveryListReport('report.report_pndl_delivery_list1.xlsx', 'proof.number.delivery.list')
