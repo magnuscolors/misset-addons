@@ -2,6 +2,7 @@
 <odoo>
     <data>
         <report
+        
             id="nsm_sale_advertising_order.report_nsm_proof_delivery_list_report_xlsx"
             model="proof.number.delivery.list"
             string="Bewijsnummerlijst xlsx"

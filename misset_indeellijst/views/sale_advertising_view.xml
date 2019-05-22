@@ -7,19 +7,32 @@
             <field name="model">sale.order.line</field>
             <field name="inherit_id" ref="nsm_sale_advertising_order.view_indeellijst_list_tree"></field>
             <field name="arch" type="xml">
-            <field name="analytic_tag_ids" position="after">
-            	<field name="material_status"/>
-                <field name="date_material_received"/>
-            </field>
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="default_order">title,adv_issue,order_advertiser_id,material_status</attribute>
+                </xpath>
+                <field name="order_advertiser_id" position="after">
+                    <field name="material_status"/>
+                    <field name="date_material_received"/>
+                    <field name="id"/>
+                    <field name="material_id"/>
+                </field>
+                <field name="adv_issue" position="after">
+                    <field name="issue_date"/>
+                    <field name="from_date" string="Start date"/>
+                    <field name="to_date" string="End date"/>
+                </field>
+                <field name="product_uom_qty" position="after">
+                    <field name="ad_number"/>
+                </field>
             </field>
         </record>
-        
+
         <record id="view_indeellijst_form_inherit" model="ir.ui.view">
             <field name="name">sale.order.line.indeellijst.tree.inherit</field>
             <field name="model">sale.order.line</field>
             <field name="inherit_id" ref="sale_advertising_order.view_adv_order_line_form"></field>
             <field name="arch" type="xml">
-            <field name="proof_number_amt_payer" position="after">
+            <field name="issue_date" position="after">
             	<field name="material_status"/>
                 <field name="date_material_received"/>
             </field>
