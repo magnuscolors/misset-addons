@@ -13,6 +13,38 @@
                  </group>
              </xpath>
              </field>
+            <field name="name" position="replace">
+                <field name="lastname"/>
+            </field>
+            <field name="function" position="replace">
+            </field>
+            <field name="phone" position="replace">
+            </field>
+            <field name="email" position="replace">
+            </field>
+            <field name="user_id" position="replace">
+            </field>
+            <field name="is_company" position="replace">
+            </field>
+            <field name="country_id" position="replace">
+            </field>
+            <field name="parent_id" position="replace">
+            </field>
+            <field name="lastname" position="before">
+				<field name="ref"/>
+			</field>
+            <field name="lastname" position="after">
+				<field name="city"/>
+                <field name="country_id"/>
+                <field name="email"/>
+                <field name="phone"/>
+                <field name="sector_id"/>
+                <field name="is_company"/>
+                <field name="parent_id"/>
+                <field name="firstname"/>
+                <field name="function"/>
+                <field name="user_id"/>
+			</field>
         </record>
         
         
