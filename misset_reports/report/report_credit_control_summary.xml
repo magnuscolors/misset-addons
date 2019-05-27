@@ -1,8 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="report_credit_control_summary_document" inherit_id="account_credit_control.report_credit_control_summary_document">
+    <template id="report_credit_control_summary_document" inherit_id="nsm_sale_advertising_order.report_credit_control_summary_document_nsm">
         <xpath expr="//div[@class='page']" position="attributes">
             <attribute name="style">padding-left:70px;</attribute>
+        </xpath>
+        <xpath expr="//div[@id='address']" position="replace">
+            <div class="row mt32 mb32" id="address">
+                <div class="col-xs-12">
+                    <br/>
+                    <br/>
+                    <strong>
+                        <t t-if="doc.partner_id.is_company">
+                            <div t-field="doc.partner_id.name"/>
+                        </t>
+                        <t t-if="not doc.partner_id.is_company">
+                            <div t-if="doc.partner_id and doc.partner_id.parent_id">
+                                <span t-field="doc.partner_id.parent_id.name"/>
+                            </div>
+                            <div t-if="doc.partner_id and not doc.partner_id.parent_id">
+                                <span t-field="doc.partner_id.name"/>
+                            </div>
+                        </t>
+                        <t t-if="doc.partner_id">
+                            <div t-field="doc.partner_id.street"/>
+                            <div t-field="doc.partner_id.street2"/>
+                            <span t-field="doc.partner_id.zip"/> <span t-field="doc.partner_id.city"/>
+                            <div t-if="doc.partner_id.country_id" t-field="doc.partner_id.country_id.name"/>
+                        </t>
+                    </strong>
+                </div>
+                <div class="col-xs-12">
+                    <br/>
+                    <span t-field="doc.report_date"/>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//div[@id='nsm_footer']" position="replace">
         </xpath>
     </template>
 </odoo>
