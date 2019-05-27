@@ -15,6 +15,10 @@
             	<field name="bank_journal_id" position="attributes">
             		<attribute name="invisible">True</attribute>
             	</field> 
+            	<field name="payment_mode" position="attributes">
+            		<attribute name="invisible">True</attribute>
+            	</field> 
+            	
             	
             </field>
         </record>
