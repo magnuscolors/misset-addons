@@ -30,10 +30,10 @@
     'name' : 'misset_crm',
     'version' : '1.0',
     'category': 'other',
-    'description': "This module adds customised functioality to the CRM module for Misset Uitgeverij B.V.",
+    'description': "This module adds customised functionality to the CRM module for Misset Uitgeverij B.V.",
     'author'  : 'Magnus - DK',
     'website' : 'http://www.magnus.nl',
-    'depends' : ['sale_advertising_order','crm','partner_firstname'],
+    'depends' : ['sale_advertising_order','crm','partner_firstname','crm_segments'],
     'data'    : [
         'views/res_partner_view.xml',
         ],
