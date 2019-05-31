@@ -6,6 +6,7 @@
             <field name="model">res.partner</field>
             <field name="arch" type="xml">
                  <tree string="Contacts">
+                    <field name="display_name"/>
                     <field name="ref"/>
                     <field name="city"/>
                     <field name="country_id"/>
@@ -14,7 +15,7 @@
                     <field name="sector_id"/>
                     <field name="is_company"/>
                     <field name="parent_id"/>
-                    <field name="firstname"/>
+                    <!--field name="firstname"/-->
                     <field name="function"/>
                     <field name="user_id"/>
 			    </tree>
