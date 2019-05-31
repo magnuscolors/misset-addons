@@ -30,7 +30,9 @@ This module allows you to use both CRM and Sales Management to run your advertis
     """,
     'author': 'Magnus - Dk',
     'website': 'http://www.magnus.nl',
-    'depends': ['nsm_sale_advertising_order'
+    'depends': [
+                'nsm_sale_advertising_order',
+                'sale_advertising_order'
                 ],
     'data': [
         'views/sale_advertising_view.xml',
