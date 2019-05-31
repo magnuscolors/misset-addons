@@ -6,8 +6,8 @@
             <field name="model">res.partner</field>
             <field name="arch" type="xml">
                  <tree string="Contacts">
-                    <field name="display_name"/>
                     <field name="ref"/>
+                    <field name="display_name"/>
                     <field name="city"/>
                     <field name="country_id"/>
                     <field name="email"/>
@@ -15,7 +15,6 @@
                     <field name="sector_id"/>
                     <field name="is_company"/>
                     <field name="parent_id"/>
-                    <!--field name="firstname"/-->
                     <field name="function"/>
                     <field name="user_id"/>
 			    </tree>
@@ -28,10 +27,10 @@
             <field name="inherit_id" ref="partner_firstname.view_partner_form_firstname"></field>
              <field name="arch" type="xml">
                  <xpath expr="//field[@name='child_ids']/form//div/group" position="replace">
-                    <group >
-                                <field name="lastname" attrs="{'required': [('firstname', '=', False),('is_company', '=', False),('type', '=', 'contact')]}"/>
-                                <field name="firstname" attrs="{'required': [('lastname', '=', False),('is_company', '=', False),('type', '=', 'contact')]}"/>
-                     </group>
+                    <group>
+                        <field name="lastname" attrs="{'required': [('firstname', '=', False),('is_company', '=', False),('type', '=', 'contact')]}"/>
+                        <field name="firstname" attrs="{'required': [('lastname', '=', False),('is_company', '=', False),('type', '=', 'contact')]}"/>
+                    </group>
                  </xpath>
              </field>
         </record>
