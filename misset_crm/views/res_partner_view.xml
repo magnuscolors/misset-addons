@@ -12,7 +12,6 @@
                             <field name="firstname" attrs="{'required': [('lastname', '=', False),('is_company', '=', False),('type', '=', 'contact')]}"/>
                  </group>
              </xpath>
-             </field>
             <field name="name" position="replace">
                 <field name="lastname"/>
             </field>
@@ -45,8 +44,7 @@
                 <field name="function"/>
                 <field name="user_id"/>
 			</field>
+			 </field>
         </record>
-        
-        
     </data>
 </odoo>
