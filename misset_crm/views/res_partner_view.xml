@@ -22,7 +22,7 @@
 			 </field>
         </record>
 
-        <!--record id="misset_crm_res_partner_view" model="ir.ui.view">
+        <record id="misset_crm_res_partner_view" model="ir.ui.view">
             <field name="name">res.partner.form</field>
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="partner_firstname.view_partner_form_firstname"></field>
@@ -34,6 +34,6 @@
                      </group>
                  </xpath>
              </field>
-        </record-->
+        </record>
     </data>
 </odoo>
