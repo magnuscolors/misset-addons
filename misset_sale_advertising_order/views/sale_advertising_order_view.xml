@@ -15,12 +15,6 @@
 				</field>
 				<field name="product_id" position="replace">
 				</field>
-				<field name="title" position="after">
-					<field name="product_template_id"/>
-					<field name="issue_date"/>
-					<field name="from_date"/>
-					<field name="to_date"/>
-				</field>
 				<field name="booklet_surface_area" position="replace">
 				</field>
 				<field name="layout_category_id" position="replace">
@@ -30,6 +24,14 @@
 				<field name="page_reference" position="replace">
 				</field>
 				<field name="product_uom" position="replace">
+				</field>
+				<field name="price_unit" position="replace">
+				</field>
+				<field name="title" position="after">
+					<field name="product_template_id"/>
+					<field name="issue_date"/>
+					<field name="from_date"/>
+					<field name="to_date"/>
 				</field>
 				<field name="product_uom_qty" position="after">
 					<field name="product_uom"/>
@@ -48,7 +50,7 @@
 			</field>
 			</field>
 		</record>
-		
+
 		<record id="view_order_form_advertising" model="ir.ui.view">
             <field name="name">sale.order.form.advertising</field>
             <field name="model">sale.order</field>
