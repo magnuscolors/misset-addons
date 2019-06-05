@@ -20,8 +20,8 @@ class NSMDeliveryListReport(ReportXlsx):
         def _prepare_data(customer, pLine):
             records = []
             parent = customer.parent_id
-            records.append(str(pLine.proof_country_code).encode('utf-8') or '')
-            records.append(str(_kix_code(customer)).encode('utf-8'))
+            records.append(str(pLine.proof_country_code) or '')
+            records.append(str(_kix_code(customer)))
             account_name = ''
             initial = ''
             firstname = ''
@@ -47,7 +47,7 @@ class NSMDeliveryListReport(ReportXlsx):
                 account_details = str(tital) + str(initial) + str(firstname) + str(infix) + str(last_name)
 #                 account_name = customer.name or ''
                 
-            records.append(account_details.encode('utf-8') or '')
+            records.append(account_details or '')
             
             initial = ''
             firstname = ''
@@ -77,7 +77,7 @@ class NSMDeliveryListReport(ReportXlsx):
 #             if pLine.proof_number_payer.infix:
 #                 infix = pLine.proof_number_payer.infix + ' '
                 
-            records.append(str(blank_details).encode('utf-8'))
+            records.append(str(blank_details))
             
             street_name_space = ' '
             stret_name = ''
@@ -90,10 +90,10 @@ class NSMDeliveryListReport(ReportXlsx):
             if not stret_number:
                 stret_number = ''
             street = stret_name + street_name_space + stret_number
-            records.append(street.encode('utf-8'))
+            records.append(street)
             records.append(pLine.proof_zip)
-            records.append(customer.city.encode('utf-8') or parent.city.encode('utf-8') or '')
-            records.append(customer.country_id.name.encode('utf-8') or parent.country_id.name.encode('utf-8') or '')
+            records.append(customer.city or parent.city or '')
+            records.append(customer.country_id.name or parent.country_id.name or '')
             amount = 0
             if customer.id in pLine.line_id.proof_number_adv_customer.ids:
                 amount += pLine.line_id.proof_number_amt_adv_customer
@@ -101,10 +101,10 @@ class NSMDeliveryListReport(ReportXlsx):
                 amount += pLine.line_id.proof_number_amt_payer
             records.append(amount)
 #             records.append(pLine.line_id.product_template_id.name or '')
-            issue_date_cov = datetime.datetime.strptime(pLine.issue_date, '%Y-%m-%d')
-            issue_date_c = datetime.datetime.strftime(issue_date_cov , '%d/%m/%Y')
-            records.append(issue_date_c)
-            records.append(str(pLine.title.name).encode('utf-8'))
+#             issue_date_cov = datetime.datetime.strptime(pLine.issue_date, '%Y-%m-%d')
+#             issue_date_c = datetime.datetime.strftime(issue_date_cov , '%d/%m/%Y')
+#             records.append(issue_date_c)
+            records.append(str(pLine.title.name))
             
             return records
 

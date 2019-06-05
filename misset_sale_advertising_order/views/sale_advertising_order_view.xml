@@ -18,8 +18,8 @@
 				<field name="title" position="after">
 					<field name="product_template_id"/>
 					<field name="issue_date"/>
-					<field name="start_date"/>
-					<field name="end_date"/>
+					<field name="from_date"/>
+					<field name="to_date"/>
 				</field>
 				<field name="booklet_surface_area" position="replace">
 				</field>
