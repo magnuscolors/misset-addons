@@ -27,6 +27,8 @@
         'report/report_invoice.xml',
         'report/report_saleorder_document_nsm.xml',
         'report/report_saleorderlines_document_nsm.xml',
+        'data/mail_template_data.xml',
+
     ],
     # only loaded in demonstration mode
     'demo': [
