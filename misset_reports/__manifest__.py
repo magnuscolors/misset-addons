@@ -19,7 +19,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['nsm_account', 'account_credit_control'],
+    'depends': ['nsm_account', 'account_credit_control', 'nsm_sale_advertising_order'],
 
     # always loaded
     'data': [

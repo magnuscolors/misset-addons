@@ -19,7 +19,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['nsm_account'],
+    'depends': ['nsm_account','nsm_sale_advertising_order'],
 
     # always loaded
     'data': [
@@ -27,6 +27,8 @@
         'report/report_invoice.xml',
         'report/report_saleorder_document_nsm.xml',
         'report/report_saleorderlines_document_nsm.xml',
+        'data/mail_template_data.xml',
+
     ],
     # only loaded in demonstration mode
     'demo': [
