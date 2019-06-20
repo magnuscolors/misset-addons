@@ -19,7 +19,8 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['nsm_account','nsm_sale_advertising_order'],
+    'depends': ['nsm_account','nsm_sale_advertising_order',
+                'sale_advertising_order_invoice_customisation'],
 
     # always loaded
     'data': [

@@ -10,6 +10,13 @@
                 <div>T.a.v.: Crediteurenadministratie</div>
             </t>
         </xpath>
+        <xpath expr="//div/strong/t[@t-if='o.partner_id']" position="after">
+            <t t-if="o.customer_contact">
+               <div t-if="o.customer_contact.name">
+                   Attn.: <span t-field="o.customer_contact.name"/>
+               </div>
+            </t>
+        </xpath>
 </template>
 
 
