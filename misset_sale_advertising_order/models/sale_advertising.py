@@ -40,6 +40,6 @@ class SaleOrder(models.Model):
         res = super(SaleOrder, self).action_submit()
         orders = self.filtered(lambda s: s.state in ['submitted'] and not s.ver_tr_exc)
         for o in orders:
-            self.message_post(body=_("Manager approval doesn't required, direclty submitted for Traffic User approval."))
+            self.message_post(body=_("Manager approval isn't required, direclty submitted for Traffic User approval."))
             o.action_approve1()
         return res
