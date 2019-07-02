@@ -44,6 +44,8 @@ defined.
     'depends' : ['nsm_expense'],
     'data'    : [
         'security/hr_expense_security.xml',
+        'security/ir.model.access.csv',
+        'security/ir_rule.xml',
         'views/company_view.xml',
         'views/hr_expense_views.xml',
         'views/menu_view.xml',

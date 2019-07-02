@@ -13,6 +13,13 @@ class HrExpense(models.Model):
     _inherit = 'hr.expense'
     
     is_from_crdit_card = fields.Boolean("is From Credit Card")
+
+    @api.model
+    def default_get(self, fields):
+        rec = super(HrExpense, self).default_get(fields)
+        if self._context.get("from_credi_card_expense"):
+            rec.update({'is_from_crdit_card': True})
+        return rec
     
     @api.model
     def create(self,vals):
@@ -131,7 +138,6 @@ class HrExpenseSheet(models.Model):
     
     @api.model
     def default_get(self, fields):
-        context = dict(self._context or {})
         rec = super(HrExpenseSheet, self).default_get(fields)
         if self._context.get("from_credi_card_expense"):
             rec.update({'is_from_crdit_card':True})
