@@ -20,12 +20,29 @@
 #
 ##############################################################################
 from odoo import api, fields, models, _
+from odoo.exceptions import UserError, ValidationError
 
 class AccountInvoice(models.Model):
     _inherit = "account.invoice"
     
     account_analytic_id = fields.Many2one('account.analytic.account',
         string='Analytic Account')
+
+    # Overridden:
+    @api.multi
+    def action_invoice_paid(self):
+        # lots of duplicate calls to action_invoice_paid, so we remove those already paid
+        to_pay_invoices = self.filtered(lambda inv: inv.state != 'paid' and inv.amount_total > 0)
+        if to_pay_invoices.filtered(lambda inv: inv.state not in ['auth','verified'] and
+                                                               inv.type in ['in_invoice','in_refund']):
+            raise UserError(_('Invoice must be authorized and/or verified in order to set it to register payment.'))
+        if to_pay_invoices.filtered(lambda inv: inv.state not in ['open'] and
+                                                               inv.type in ['out_invoice','out_refund']):
+            raise UserError(_('Invoice must be open in order to set it to register payment.'))
+        if to_pay_invoices.filtered(lambda inv: not inv.reconciled):
+            raise UserError(
+                _('You cannot pay an invoice which is partially paid. You need to reconcile payment entries first.'))
+        return to_pay_invoices.write({'state': 'paid'})
     
 #     @api.onchange('account_analytic_id')
 #     def onchange_domain_analytic(self):
