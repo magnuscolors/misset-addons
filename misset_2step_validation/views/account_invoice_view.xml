@@ -17,7 +17,7 @@
     <record id="invoice_supplier_cancel_auth_misset" model="ir.ui.view">
         <field name="name">misset_auth.invoice_supplier_cancel_form_inherit</field>
         <field name="model">account.invoice</field>
-        <field name="inherit_id" ref="megis_auth.invoice_supplier_cancel_form_inherit"/>
+        <field name="inherit_id" ref="account_invoice_2step_validation.invoice_supplier_cancel_auth"/>
         <field name="arch" type="xml">
             <xpath expr="//button[@name='action_invoice_cancel']" position="replace">
                 <button name="action_invoice_cancel" type="object" states="draft,start_wf,proforma2,open,auth,verified" string="Cancel Invoice" groups="account_invoice_2step_validation.authorize,account.group_account_invoice"/>
