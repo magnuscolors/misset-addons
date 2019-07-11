@@ -60,6 +60,9 @@
             <xpath expr="//button[@name='action_confirm']" position="attributes">
             	<attribute name="groups">sale_advertising_order.group_traffic_user</attribute>
             </xpath>
+			<xpath expr="//button[@name='action_submit']" position="attributes">
+				<attribute name="attrs">{'invisible': [('state','not in',['draft'])]}</attribute>
+			</xpath>
             </field>
        </record>
 	</data>
