@@ -22,6 +22,7 @@
 
 from odoo import api, fields, models, _
 from datetime import datetime
+from odoo.exceptions import UserError, ValidationError
 
 class sale_advertising_issue(models.Model):
     _inherit = "sale.advertising.issue"
@@ -43,3 +44,11 @@ class SaleOrder(models.Model):
             o.message_post(body=_("Manager approval isn't required, direclty submitted for Traffic User approval."))
             o.action_approve1()
         return res
+
+    @api.multi
+    def write(self, vals):
+        if not self.user_has_groups(
+                'sale_advertising_order.group_senior_sales,sale_advertising_order.group_traffic_user,sales_team.group_sale_manager'):
+            raise UserError(_("You can't modify order once submitted!"))
+        return super(SaleOrder, self).write(vals)
+
