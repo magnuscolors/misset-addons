@@ -63,6 +63,9 @@
 			<xpath expr="//button[@name='action_submit']" position="attributes">
 				<attribute name="attrs">{'invisible': [('state','not in',['draft'])]}</attribute>
 			</xpath>
+			<xpath expr="//field[@name='pricelist_id']" position="attributes">
+				<attribute name="options">{"no_create": True, "no_create_edit": True, "no_open": True}</attribute>
+			</xpath>
             </field>
        </record>
 	</data>
