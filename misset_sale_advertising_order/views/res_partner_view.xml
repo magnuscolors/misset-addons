@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="view_partner_property_misset_form" model="ir.ui.view">
+            <field name="name">res.partner.product.property.misset.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="product.view_partner_property_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='property_product_pricelist']" position="attributes">
+				    <attribute name="options">{"no_create": True, "no_create_edit": True, "no_open": True}</attribute>
+			    </xpath>
+            </field>
+        </record>
+</odoo>

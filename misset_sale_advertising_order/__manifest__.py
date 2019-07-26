@@ -36,6 +36,7 @@
     'depends' : ['nsm_sale_advertising_order'],
     'data'    : [
         'views/sale_advertising_order_view.xml',
+        'views/res_partner_view.xml',
         'report/nsm_report.xml',
         ],
     'demo' : [],

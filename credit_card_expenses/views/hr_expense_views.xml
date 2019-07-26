@@ -17,9 +17,7 @@
             	</field> 
             	<field name="payment_mode" position="attributes">
             		<attribute name="invisible">True</attribute>
-            	</field> 
-            	
-            	
+            	</field>
             </field>
         </record>
         
@@ -100,7 +98,7 @@
         <field name="view_mode">tree,kanban,form,graph,pivot</field>
         <field name="search_view_id" ref="hr_expense.view_hr_expense_filter"/>
         <field name="domain">[('employee_id.user_id', '=', uid),('is_from_crdit_card', '=', True)]</field>
-        <field name="context">{'search_default_refused': 1}</field>
+        <field name="context">{'search_default_refused': 1, 'from_credi_card_expense':True}</field>
         <field name="help" type="html">
           <p>
             The steps to process expenses are:
@@ -120,7 +118,7 @@
         <field name="view_mode">tree,kanban,form,pivot,graph</field>
         <field name="search_view_id" ref="hr_expense.view_hr_expense_sheet_filter"/>
         <field name="domain">[('is_from_crdit_card', '=', True)]</field>
-        <field name="context">{'search_default_submitted': 1}</field>
+        <field name="context">{'search_default_submitted': 1, 'from_credi_card_expense':True}</field>
         <field name="help" type="html">
           <p class="oe_view_nocontent_create">
             Click here to create a new expense report.
@@ -136,7 +134,7 @@
         <field name="view_mode">tree,kanban,form,pivot,graph</field>
         <field name="search_view_id" ref="hr_expense.view_hr_expense_sheet_filter"/>
         <field name="domain">[('is_from_crdit_card', '=', True)]</field>
-        <field name="context">{'search_default_to_post': 1}</field>
+        <field name="context">{'search_default_to_post': 1, 'from_credi_card_expense':True}</field>
         <field name="help" type="html">
           <p class="oe_view_nocontent_create">
             Click here to create a new expense report.
@@ -152,7 +150,7 @@
         <field name="view_mode">tree,kanban,form,pivot,graph</field>
         <field name="search_view_id" ref="hr_expense.view_hr_expense_sheet_filter"/>
         <field name="domain">[('is_from_crdit_card', '=', True)]</field>
-        <field name="context">{'search_default_approved': 1}</field>
+        <field name="context">{'search_default_approved': 1, 'from_credi_card_expense':True}</field>
         <field name="help" type="html">
           <p class="oe_view_nocontent_create">
             Click here to create a new expense report.
