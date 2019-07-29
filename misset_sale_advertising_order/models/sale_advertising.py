@@ -47,8 +47,9 @@ class SaleOrder(models.Model):
 
     @api.multi
     def write(self, vals):
-        if not self.user_has_groups(
-                'sale_advertising_order.group_senior_sales,sale_advertising_order.group_traffic_user,sales_team.group_sale_manager'):
-            raise UserError(_("You can't modify order once submitted!"))
+        for rec in self:
+            if rec.state not in ('draft', 'submitted') and  not rec.user_has_groups(
+                    'sale_advertising_order.group_senior_sales,sale_advertising_order.group_traffic_user,sales_team.group_sale_manager'):
+                raise UserError(_("You can't modify order once submitted!"))
         return super(SaleOrder, self).write(vals)
 
