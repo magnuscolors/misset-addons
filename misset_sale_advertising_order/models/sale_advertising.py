@@ -49,7 +49,8 @@ class SaleOrder(models.Model):
     def write(self, vals):
         for rec in self:
             if rec.state not in ('draft', 'submitted') and  not rec.user_has_groups(
-                    'sale_advertising_order.group_senior_sales,sale_advertising_order.group_traffic_user,sales_team.group_sale_manager'):
+                    'sale_advertising_order.group_senior_sales,sale_advertising_order.group_traffic_user,sales_team.group_sale_manager')\
+                    and not rec.order_line.filtered(lambda ol: ol.multi_line):
                 raise UserError(_("You can't modify order once submitted!"))
         return super(SaleOrder, self).write(vals)
 
