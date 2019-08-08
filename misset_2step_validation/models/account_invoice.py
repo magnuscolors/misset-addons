@@ -32,7 +32,7 @@ class AccountInvoice(models.Model):
     @api.multi
     def action_invoice_paid(self):
         # lots of duplicate calls to action_invoice_paid, so we remove those already paid
-        to_pay_invoices = self.filtered(lambda inv: inv.state not in ('verified','paid') and abs(inv.amount_total) > 0)
+        to_pay_invoices = self.filtered(lambda inv: inv.state != 'paid' and abs(inv.amount_total) > 0)
         if to_pay_invoices.filtered(lambda inv: inv.state not in ['auth','verified'] and
                                                                inv.type in ['in_invoice','in_refund']):
             raise UserError(_('Invoice must be authorized and/or verified in order to set it to register payment.'))
