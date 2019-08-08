@@ -43,6 +43,14 @@ class AccountInvoice(models.Model):
             raise UserError(
                 _('You cannot pay an invoice which is partially paid. You need to reconcile payment entries first.'))
         return to_pay_invoices.write({'state': 'paid'})
+
+    @api.multi
+    def action_invoice_verify(self):
+        res = super(AccountInvoice, self).action_invoice_verify()
+        to_pay_invoices = self.filtered(lambda inv: inv.state in ('verified') and inv.amount_total == 0)
+        to_pay_invoices.write({'state': 'paid'})
+        return res
+
     
 #     @api.onchange('account_analytic_id')
 #     def onchange_domain_analytic(self):
