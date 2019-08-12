@@ -41,7 +41,7 @@ class SaleOrder(models.Model):
         res = super(SaleOrder, self).action_submit()
         orders = self.filtered(lambda s: s.state in ['submitted'] and not s.ver_tr_exc)
         for o in orders:
-            o.message_post(body=_("Manager approval isn't required, direclty submitted for Traffic User approval."))
+            o.message_post(body=_("This quotation has been directly submitted for Traffic Approval, as Manager Approval is not required."))
             o.action_approve1()
         return res
 
@@ -51,6 +51,6 @@ class SaleOrder(models.Model):
             if rec.state not in ('draft', 'submitted') and  not rec.user_has_groups(
                     'sale_advertising_order.group_senior_sales,sale_advertising_order.group_traffic_user,sales_team.group_sale_manager')\
                     and not rec.order_line.filtered(lambda ol: ol.multi_line):
-                raise UserError(_("You can't modify order once submitted!"))
+                raise UserError(_("You can't modify an order after approval!"))
         return super(SaleOrder, self).write(vals)
 
