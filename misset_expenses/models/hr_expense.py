@@ -6,6 +6,8 @@ from odoo import api, fields, models, _
 class HrExpense(models.Model):
     _inherit = "hr.expense"
 
+    analytic_tag_ids = fields.Many2many('account.analytic.tag', string='WKR')
+
     def _get_recursive_departments(self):
         analytic_account = self.env['account.analytic.account']
         employee = self.env.user._get_related_employees()
@@ -42,3 +44,9 @@ class HrExpense(models.Model):
                 'analytic_account_id': [
                     ('id', 'in', analytic_account.ids)]}}
         return {}
+    
+    def _prepare_move_line(self, line):
+        move_line = super(HrExpense, self)._prepare_move_line(line)
+        if self.analytic_tag_ids:
+            move_line.update({'analytic_tag_ids': [(6, 0, self.analytic_tag_ids.ids)]})
+        return move_line
