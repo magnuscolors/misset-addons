@@ -39,7 +39,7 @@ class SaleOrder(models.Model):
     @api.multi
     def action_submit(self):
         res = super(SaleOrder, self).action_submit()
-        orders = self.filtered(lambda s: s.state in ['submitted'] and not s.ver_tr_exc)
+        orders = self.filtered(lambda s: s.advertising and s.state in ['submitted'] and not s.ver_tr_exc)
         for o in orders:
             o.message_post(body=_("This quotation has been directly submitted for Traffic Approval, as Manager Approval is not required."))
             o.action_approve1()
@@ -48,7 +48,7 @@ class SaleOrder(models.Model):
     @api.multi
     def write(self, vals):
         for rec in self:
-            if rec.state not in ('draft', 'submitted') and  not rec.user_has_groups(
+            if rec.advertising and rec.state not in ('draft', 'submitted') and  not rec.user_has_groups(
                     'sale_advertising_order.group_senior_sales,sale_advertising_order.group_traffic_user,sales_team.group_sale_manager')\
                     and not rec.order_line.filtered(lambda ol: ol.multi_line):
                 raise UserError(_("You can't modify an order after approval!"))
