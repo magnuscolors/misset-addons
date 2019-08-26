@@ -8,7 +8,7 @@
             <field name="inherit_id" ref="nsm_sale_advertising_order.view_indeellijst_list_tree"></field>
             <field name="arch" type="xml">
                 <xpath expr="//tree" position="attributes">
-                    <attribute name="default_order">title,issue_date,order_advertiser_id,material_status</attribute>
+                    <attribute name="default_order">issue_date,from_date,title,order_advertiser_id,material_status</attribute>
                 </xpath>
 
                     <field name="id" position="replace">
@@ -114,5 +114,32 @@
             <field name="key">action</field>
             <field name="model">sale.order.line</field>
         </record>
+
+        <record model="ir.ui.view" id="misset_sales_order_line_filter_view">
+            <field name="name">misset.sale.order.line.filter.view</field>
+            <field name="model">sale.order.line</field>
+            <field name="inherit_id" ref="sale_advertising_order.view_advertising_sales_order_line_filter" />
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='from_date_sale_orders_filter']" position="after">
+                    <filter name="material_pending_filter" string="Material status is pending" domain="[('material_status','=', 'Pending')]" />
+                    <filter name="online_order_filter" string="Online order lines" domain="[('from_date','!=', False)]" />
+                    <filter name="print_order_filter" string="Print order lines" domain="[('from_date','=', False)]" />
+                </xpath>
+                <xpath expr="//field[@name='issue_date']" position="after">
+                    <field name="title" operator="child_of"/>
+                    <field name="adv_issue" operator="child_of"/>
+                </xpath>
+                <xpath expr="//group/filter[last()]" position="after">
+                    <filter string="Title" name="group_by_title" domain="[]" context="{'group_by':'title'}"/>
+                    <filter string="Advertising Issue" name="group_by_adv_issue" domain="[]" context="{'group_by':'adv_issue'}" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="nsm_sale_advertising_order.nsm_indeellijst_action" model="ir.actions.act_window">
+            <field name="context">{'search_default_group_by_title': 1,'search_default_group_by_adv_issue': 1}</field>
+        </record>
+
 	</data>
 </odoo>
