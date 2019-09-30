@@ -6,6 +6,7 @@ import re
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError, ValidationError
 from odoo.tools import email_split, float_is_zero
+import json
 
 import odoo.addons.decimal_precision as dp
 
@@ -135,6 +136,8 @@ class HrExpenseSheet(models.Model):
     _inherit = "hr.expense.sheet"
     
     is_from_crdit_card = fields.Boolean("is From Credit Card")
+    expense_line_domain = fields.Char(compute='_compute_expense_line_domain', readonly=True, store=False, )
+
     
     @api.model
     def default_get(self, fields):
@@ -199,4 +202,16 @@ class HrExpenseSheet(models.Model):
 #         if positive_lines and negative_lines:
 #             raise ValidationError(_('You cannot have a positive and negative amounts on the same expense report.'))
 
-    
+    @api.depends('expense_line_ids')
+    @api.multi
+    def _compute_expense_line_domain(self):
+        """
+        Compute the domain for the analytic_account_domain.
+        """
+        for rec in self:
+            if rec.is_from_crdit_card:
+                rec.expense_line_domain = json.dumps(
+                    [('is_from_crdit_card', '=', True), ('employee_id', '=', self.employee_id.id)]
+                )
+            else:
+                rec.expense_line_domain = [('is_from_crdit_card', '=', False), ('employee_id', '=', self.employee_id.id)]

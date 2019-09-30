@@ -17,7 +17,11 @@
             <field name="inherit_id" ref="hr_expense.hr_expense_form_view"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='analytic_account_id']" position="after">
+                    <field name="analytic_account_domain" invisible="1"/>
                     <field name="analytic_tag_ids"  widget="many2many_tags" options="{'no_create_edit': True}"/>
+                </xpath>
+                <xpath expr="//field[@name='analytic_account_id']" position="attributes">
+                    <attribute name="domain">analytic_account_domain</attribute>
                 </xpath>
             </field>
         </record>
