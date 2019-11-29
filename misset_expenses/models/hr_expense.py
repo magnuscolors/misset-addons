@@ -1,12 +1,30 @@
 # -*- coding: utf-8 -*-
 
 from odoo import api, fields, models, _
+import json
 
 
 class HrExpense(models.Model):
     _inherit = "hr.expense"
 
+    @api.depends('analytic_account_id')
+    @api.multi
+    def _compute_analytic_account_domain(self):
+        """
+        Compute the domain for the analytic_account_domain.
+        """
+        for rec in self:
+            analytic_account = rec._get_recursive_departments()
+            if analytic_account:
+                rec.analytic_account_domain = json.dumps(
+                    [('id', 'in', analytic_account.ids)]
+                )
+            else:
+                rec.analytic_account_domain = []
+
+
     analytic_tag_ids = fields.Many2many('account.analytic.tag', string='WKR')
+    analytic_account_domain = fields.Char(compute='_compute_analytic_account_domain', readonly=True, store=False, )
 
     def _get_recursive_departments(self):
         analytic_account = self.env['account.analytic.account']
@@ -36,15 +54,6 @@ class HrExpense(models.Model):
         return analytic_account
 
 
-    @api.onchange('analytic_account_id')
-    def onchange_analytic_account_id(self):
-        analytic_account = self._get_recursive_departments()
-        if analytic_account:
-            return {'domain': {
-                'analytic_account_id': [
-                    ('id', 'in', analytic_account.ids)]}}
-        return {}
-    
     def _prepare_move_line(self, line):
         move_line = super(HrExpense, self)._prepare_move_line(line)
         if self.analytic_tag_ids:
