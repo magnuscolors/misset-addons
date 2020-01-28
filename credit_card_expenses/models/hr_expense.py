@@ -214,4 +214,4 @@ class HrExpenseSheet(models.Model):
                     [('is_from_crdit_card', '=', True), ('employee_id', '=', self.employee_id.id)]
                 )
             else:
-                rec.expense_line_domain = [('is_from_crdit_card', '=', False), ('employee_id', '=', self.employee_id.id)]
+                rec.expense_line_domain = json.dumps([('is_from_crdit_card', '=', False), ('employee_id', '=', self.employee_id.id)])
