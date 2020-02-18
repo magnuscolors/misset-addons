@@ -1,0 +1,63 @@
+<odoo>
+  <data>
+      <record id="crm_activity_de_duplicate_view_tree" model="ir.ui.view">
+            <field name="name">Crm Activity De Duplicate</field>
+            <field name="model">crm.activity.de.duplicate</field>
+            <field name="arch" type="xml">
+                <tree string="Activity De Duplicate">
+                    <field name="activity" />
+                    <field name="total_ids_count" />
+                    <field name="deleted_ids_count" />
+                    <field name="marked_ids_count" />
+                </tree>
+            </field>
+      </record>
+
+      <record id="crm_activity_de_duplicate_view_form" model="ir.ui.view">
+            <field name="name">Crm Activity De Duplicate</field>
+            <field name="model">crm.activity.de.duplicate</field>
+            <field name="arch" type="xml">
+                <form string="Activity De Duplicate">
+                    <sheet string="Activity De Duplicate">
+                        <group>
+                            <field name="activity" />
+                        </group>
+                        <group>
+                            <group>
+                                <field name="total_ids" />
+                                <field name="total_ids_count" />
+                            </group>
+                            <group>
+                                <field name="deleted_ids" />
+                                <field name="deleted_ids_count" />
+                            </group>
+                            <group>
+                                <field name="marked_ids" />
+                                <field name="marked_ids_count" />
+                            </group>
+                        </group>
+
+                        <footer>
+                            <button name="action_remove_duplicate_records" string="Remove duplicate records" type="object" class="btn btn-primary"/>
+                            <button attrs="{'invisible': [('deleted_ids_count', '=', False)]}" name="action_mark_likely_to_be_duplicated_records" string="Mark likely to be duplicated records" type="object" class="btn btn-primary"/>
+                            <button string="Cancel" class="btn btn-default" special="cancel"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="action_crm_activity_de_duplicate">
+			<field name="name">Crm Activity De Duplicate</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">crm.activity.de.duplicate</field>
+            <field name="view_type">form</field>
+		    <field name="view_mode">tree,form</field>
+            <field name="target">current</field>
+		</record>
+
+        <menuitem name="Crm Activity De Duplicate" id="menu_crm_activity_de_duplicate" parent="sales_team.menu_sale_config"
+                  action="action_crm_activity_de_duplicate" groups="base.group_system"/>
+
+  </data>
+</odoo>
