@@ -8,7 +8,7 @@
                     <field name="activity" />
                     <field name="total_ids_count" />
                     <field name="deleted_ids_count" />
-                    <field name="marked_ids_count" />
+                    <field name="likely_duplicated_deleted_ids_count" />
                 </tree>
             </field>
       </record>
@@ -23,24 +23,33 @@
                             <field name="activity" />
                         </group>
                         <group>
+                            <field name="total_ids" />
+                            <field name="total_ids_count" />
+                        </group>
+                        <group>
                             <group>
-                                <field name="total_ids" />
-                                <field name="total_ids_count" />
+                                <field name="duplicated_ids" />
+                                <field name="duplicated_ids_count" />
                             </group>
                             <group>
                                 <field name="deleted_ids" />
                                 <field name="deleted_ids_count" />
                             </group>
                             <group>
-                                <field name="marked_ids" />
-                                <field name="marked_ids_count" />
+                                <field name="likely_duplicated_ids" />
+                                <field name="likely_duplicated_ids_count" />
+                            </group>
+                            <group>
+                                <field name="likely_duplicated_deleted_ids" />
+                                <field name="likely_duplicated_deleted_ids_count" />
                             </group>
                         </group>
 
                         <footer>
-                            <button name="action_remove_duplicate_records" string="Remove duplicate records" type="object" class="btn btn-primary"/>
-                            <button attrs="{'invisible': [('deleted_ids_count', '=', False)]}" name="action_mark_likely_to_be_duplicated_records" string="Mark likely to be duplicated records" type="object" class="btn btn-primary"/>
-                            <button string="Cancel" class="btn btn-default" special="cancel"/>
+                            <button name="action_show_duplicated_records" attrs="{'invisible': [('activity', '=', False)]}" string="Show duplicated records" type="object" class="btn btn-primary"/>
+                            <button name="action_delete_duplicated_records" attrs="{'invisible': [('duplicated_ids', '=', False)]}" string="Delete duplicated records" type="object" class="btn btn-primary"/>
+                            <button name="action_mark_likely_to_be_duplicated_records" attrs="{'invisible': [('deleted_ids', '=', False)]}" string="Mark likely to be duplicated records" type="object" class="btn btn-primary"/>
+                            <button name="action_delete_likely_to_be_duplicated_records" attrs="{'invisible': [('likely_duplicated_ids', '=', False)]}" string="Delete likely to be duplicated records" type="object" class="btn btn-primary"/>
                         </footer>
                     </sheet>
                 </form>
