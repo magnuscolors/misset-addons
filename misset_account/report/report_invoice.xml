@@ -9,12 +9,17 @@
                 <div t-field="o.partner_id.name"/>
                 <div>T.a.v.: Crediteurenadministratie</div>
             </t>
+            <t t-if="not o.partner_id.is_company">
+                <div t-field="o.partner_id.name"/>
+            </t>
         </xpath>
         <xpath expr="//div/strong/t[@t-if='o.partner_id']" position="after">
-            <t t-if="o.customer_contact">
-               <div t-if="o.customer_contact.name">
-                   Attn.: <span t-field="o.customer_contact.name"/>
-               </div>
+            <t t-if="o.partner_id.is_company">
+                <t t-if="o.customer_contact">
+                 <div t-if="o.customer_contact.name">
+                     Attn.: <span t-field="o.customer_contact.name"/>
+                 </div>
+              </t>
             </t>
         </xpath>
 </template>
