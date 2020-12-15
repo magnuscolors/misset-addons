@@ -69,7 +69,7 @@ class IndeellijstListReport(ReportXlsx):
         sheet.write(row, 1, issue_date, cell_format)
         row += 2
 
-        ad_class_header = ['Adverteerder', 'Opportunity Subject', 'Sale Order', 'Salesperson', 'Order ID', 'Material ID', 'Product', 'Opmerkingen', 'Paginasoort','Material Status']
+        ad_class_header = ['Adverteerder', 'External reference', 'Sale Order', 'Salesperson', 'Order ID', 'Material ID', 'Product', 'Opmerkingen', 'Paginasoort','Material Status']
 
         for rdata in orderByAdClass:
             ad_class_id = rdata['ad_class'][0]
