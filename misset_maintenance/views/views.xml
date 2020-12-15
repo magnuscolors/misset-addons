@@ -1,0 +1,11 @@
+<odoo>
+  <data>
+
+    <!-- Top menu item -->
+    <menuitem name="Maintenance" id="misset_maintenance.menu_root" groups="misset_maintenance.Beheer_Aanpassen_Filters"/>
+    <!-- menu categories -->
+    <!-- actions -->
+    <menuitem name="User Defined Filters" id="base.menu_ir_filters" parent="misset_maintenance.menu_root"/>
+
+  </data>
+</odoo>
