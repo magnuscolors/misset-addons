@@ -9,8 +9,16 @@
                 <div t-field="o.partner_id.name"/>
                 <div>T.a.v.: Crediteurenadministratie</div>
             </t>
-            <t t-if="not o.partner_id.is_company">
+        </xpath>
+        <xpath expr="//div/strong/t[@t-if='not o.partner_id.is_company']" position="replace">
+          <t t-if="not o.partner_id.is_company">
+              <t t-if="not o.partner_id.parent_id">
                 <div t-field="o.partner_id.name"/>
+              </t>
+              <t t-if="o.partner_id.parent_id">
+                <div t-field="o.partner_id.parent_id.name"/>
+                Attn.: <span t-field="o.partner_id.name"/>
+              </t>
             </t>
         </xpath>
         <xpath expr="//div/strong/t[@t-if='o.partner_id']" position="after">
