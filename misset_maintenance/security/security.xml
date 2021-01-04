@@ -1,0 +1,8 @@
+<odoo>
+    <data>
+
+        <record id="Beheer_Aanpassen_Filters" model="res.groups">
+            <field name="name">Beheer - Aanpassen Filters</field>
+        </record>
+    </data>
+</odoo>
