@@ -35,7 +35,7 @@ class sale_advertising_issue(models.Model):
     @api.multi
     def write(self, vals):
         result = super(sale_advertising_issue, self).write(vals)
-        issue_date =  vals.get('issue_date', False)
+        issue_date = vals.get('issue_date', False)
         if issue_date:
             issue_date = str(issue_date)
             op, ids = ('IN', tuple(self.ids)) if len(self.ids) > 1 else ('=', self.id)
