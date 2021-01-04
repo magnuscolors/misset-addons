@@ -15,7 +15,7 @@ class IndeellijstListReport(ReportXlsx):
             if sol.product_uom_qty > 1:
                 pro_name += '('+str(int(sol.product_uom_qty)) + 'p)'
             sline.append(sol.order_advertiser_id.name)
-            sline.append(sol.order_id.opportunity_subject)
+            sline.append(sol.ad_number)
             sline.append(sol.order_id.name)
             sline.append(sol.order_id.user_id.name)
             sline.append(sol.id)
