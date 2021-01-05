@@ -74,3 +74,9 @@ class SaleOrder(models.Model):
                 raise UserError(_("You can't modify an order after approval!"))
         return super(SaleOrder, self).write(vals)
 
+    @api.multi
+    @api.onchange('published_customer')
+    def onchange_partner_id(self):
+        if self.advertising:
+            self.partner_id = self.published_customer
+        return super(SaleOrder, self).onchange_partner_id()
