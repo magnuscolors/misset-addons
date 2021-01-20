@@ -75,8 +75,16 @@ class SaleOrder(models.Model):
         return super(SaleOrder, self).write(vals)
 
     @api.multi
-    @api.onchange('published_customer')
+    @api.onchange('partner_id')
     def onchange_partner_id(self):
-        if self.advertising:
-            self.partner_id = self.published_customer
+        customer_contact = self.customer_contact
+        partner = self.partner_id
+        if partner and customer_contact:
+            self.customer_contact = False
         return super(SaleOrder, self).onchange_partner_id()
+
+    @api.onchange('published_customer')
+    def onchange_published_customer(self):
+        if self.published_customer:
+            self.partner_id = self.published_customer
+
