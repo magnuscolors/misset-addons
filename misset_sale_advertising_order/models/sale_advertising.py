@@ -31,26 +31,26 @@ class sale_advertising_issue(models.Model):
 
     dtp_deadline = fields.Datetime("Closing time for DTP")
 
-
-    @api.multi
-    def write(self, vals):
-        result = super(sale_advertising_issue, self).write(vals)
-        issue_date = vals.get('issue_date', False)
-        if issue_date:
-            issue_date = str(issue_date)
-            op, ids = ('IN', tuple(self.ids)) if len(self.ids) > 1 else ('=', self.id)
-            query = ("""
-                    UPDATE sale_order_line 
-                    SET from_date = {0},
-                        to_date = {0}
-                    WHERE adv_issue {1} {2}
-                    """.format(
-                    "'%s'" % issue_date,
-                    op,
-                    ids
-                ))
-            self.env.cr.execute(query)
-        return result
+    # same code available in nsm_sale_advertising_order
+    # @api.multi
+    # def write(self, vals):
+    #     result = super(sale_advertising_issue, self).write(vals)
+    #     issue_date = vals.get('issue_date', False)
+    #     if issue_date:
+    #         issue_date = str(issue_date)
+    #         op, ids = ('IN', tuple(self.ids)) if len(self.ids) > 1 else ('=', self.id)
+    #         query = ("""
+    #                 UPDATE sale_order_line
+    #                 SET from_date = {0},
+    #                     to_date = {0}
+    #                 WHERE adv_issue {1} {2}
+    #                 """.format(
+    #                 "'%s'" % issue_date,
+    #                 op,
+    #                 ids
+    #             ))
+    #         self.env.cr.execute(query)
+    #     return result
 
 class SaleOrder(models.Model):
     _inherit = ["sale.order"]
